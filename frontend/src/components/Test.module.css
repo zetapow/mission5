@@ -1,0 +1,9 @@
+.testContainer > h1 {
+   background-color: var(--primary);
+   color: var(--neutral-100);
+   margin: calc(var(--base-unit) * 4);
+}
+
+.textXl {
+   font-size: var(--font-size-xl);
+}

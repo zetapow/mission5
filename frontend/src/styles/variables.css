@@ -1,0 +1,55 @@
+:root {
+   --base-unit: 4px;
+   /* example
+   margin: calc(var(--base-unit) * 4) // 16px;
+   gutter: calc(var(--base-unit) * 5) // 20px;
+   */
+
+   /* font size for standard text */
+   --font-size-xl: 20px;
+   --font-size-l: 18px;
+   --font-size-m: 16px;
+   --font-size-s: 14px;
+   --font-size-xs: 12px;
+
+   /* font size for headings (mobile first) */
+   --font-size-h1: 56px;
+   --font-size-h2: 42px;
+   --font-size-h3: 32px;
+   --font-size-h4: 24px;
+   --font-size-h5: 18px;
+   --font-size-h6: 16px;
+
+   /* Primary and Secondary colours */
+   --secondary: #272270;
+   --secondary-700: #1c194c;
+   --secondary-300: #3931af;
+   --primary: #ed560e;
+   --primary-900: #642406;
+   --primary-700: #b0400a;
+   --primary-600: #d84e0d;
+   --primary-300: #f38e5e;
+   --primary-100: #f9cbb4;
+
+   /* Accent and neutral */
+   --white: #ffffff;
+   --accent: #ffa000;
+   --neutral: #353535;
+   --neutral-900: #161616;
+   --neutral-300: #787878;
+   --neutral-200: #c0c0c0;
+   --neutral-100: #e1e1e1;
+   --neutral-700: #262626;
+}
+
+/* Desktop heading override */
+@media (min-width: 768px) {
+   :root {
+      --font-size-h1: 74px;
+      --font-size-h2: 56px;
+      --font-size-h3: 42px;
+      --font-size-h4: 32px;
+      --font-size-h5: 24px;
+      --font-size-h6: 20px;
+   }
+}
