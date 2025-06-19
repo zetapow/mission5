@@ -64,3 +64,16 @@ npm run dev
 
 The frontend will typically be available at [http://localhost:5173](http://localhost:5173)  
 The backend API will typically run at [http://localhost:4000](http://localhost:4000)
+
+## Authors
+
+### Design
+
+-  [@Kere M.](Kerem@missionreadyhq.com)
+-  [@Jennifer V.](Jennifervu@missionreadyhq.com)
+
+### Development
+
+-  [@Eugene L.](https://github.com/Eule034430)
+-  [@Adam T.](https://github.com/AdamT-HJ)
+-  [@Peter Z.](https://github.com/zetapow)
