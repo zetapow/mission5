@@ -1,0 +1,16 @@
+@font-face {
+   font-family: "Calibre";
+   src: url("../assets/fonts/Calibre/TestCalibre-Bold-BF661746ed7c530.otf")
+      format("opentype");
+   font-weight: 700;
+   font-style: normal;
+   font-display: swap;
+}
+@font-face {
+   font-family: "Calibre";
+   src: url("../assets/fonts/Calibre/TestCalibre-Regular-BF661746edbee52.otf")
+      format("opentype");
+   font-weight: 400;
+   font-style: normal;
+   font-display: swap;
+}
