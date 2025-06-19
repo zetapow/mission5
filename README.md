@@ -69,8 +69,8 @@ The backend API will typically run at [http://localhost:4000](http://localhost:4
 
 ### Design
 
--  [@Kere M.](Kerem@missionreadyhq.com)
--  [@Jennifer V.](Jennifervu@missionreadyhq.com)
+-  [@Kere M.](mailto:Kerem@missionreadyhq.com)
+-  [@Jennifer V.](mailto:Jennifervu@missionreadyhq.com)
 
 ### Development
 
