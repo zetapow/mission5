@@ -1,0 +1,18 @@
+.geoSearchContainer {
+  max-width: 32rem;
+  margin: calc(var(--base-unit) * 8) auto;
+  padding: calc(var(--base-unit) * 8);
+  background: var(--white);
+  border-radius: calc(var(--base-unit) * 2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.results {
+  background: var(--neutral-100);
+  padding: calc(var(--base-unit) * 4);
+  margin-top: calc(var(--base-unit) * 4);
+  border-radius: calc(var(--base-unit) * 1);
+  font-size: var(--font-size-s);
+  overflow-x: auto;
+  color: var(--neutral-900);
+}
