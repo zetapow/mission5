@@ -1,7 +1,7 @@
 import "./App.css";
 import Test from "./components/Test";
 import GeoSearch from "./components/GeoSearch";
-import StationMap from "./components/StationMap";
+import StationMap from "./components/StationMap/StationMap";
 
 function App() {
   return (
