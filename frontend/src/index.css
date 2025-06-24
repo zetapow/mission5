@@ -64,3 +64,18 @@ h6 {
 .text-xs {
   font-size: var(--font-size-xs);
 }
+
+/* Allow mobile scrolling globally */
+@media (max-width: 768px) {
+  html,
+  Add commentMore actions body {
+    overflow-y: auto; /* Allow vertical scrolling on mobile */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+  }
+
+  #root {
+    height: auto; /* Allow root to expand on mobile */
+    min-height: 100vh;
+    overflow: visible;
+  }
+}
