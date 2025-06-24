@@ -16,10 +16,10 @@ app.use(morgan("dev"));
 // Connect to MongoDB
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(
+    const connection = await mongoose.connect(
       process.env.MONGODB_URI + process.env.DATABASE_NAME
     );
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    console.log(`MongoDB Connected: ${connection.connection.host}`);
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
     process.exit(1);
