@@ -17,7 +17,29 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 //MongoDB Connection - needed to connect and load Schema / apply text index
-const MONGODB_CONNECTION = process.env.MONGODB_URI || "mongodb://localhost:27017/stations";
+const MONGODB_CONNECTION =
+  process.env.MONGODB_URI || "mongodb://localhost:27017/stations";
+
+// Connect to MongoDB
+const connectDB = async () => {
+  try {
+    const connection = await mongoose.connect(
+      process.env.MONGODB_URI + process.env.DATABASE_NAME
+    );
+    console.log(`MongoDB Connected: ${connection.connection.host}`);
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+    process.exit(1);
+  }
+};
+
+// Initialize database connection
+connectDB();
+
+// Routes
+app.use("/api/maptiler", maptilerRoutes);
+app.use("/api/stations", stationRoutes);
+app.use("/api/stations-search", stationSearch);
 
 // Connect to MongoDB using Mongoose
 mongoose.connect(MONGODB_CONNECTION)

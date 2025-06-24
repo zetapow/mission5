@@ -1,14 +1,19 @@
 import "./App.css";
 import Test from "./components/Test";
 import GeoSearch from "./components/GeoSearch";
+import StationMap from "./components/StationMap/StationMap";
+import Header from "./components/shared/Header/Header";
+import Footer from "./components/shared/Footer/Footer";
 
 function App() {
   return (
-    <>
-      <h1>Welcome to Mission 5</h1>
-      <GeoSearch />
-      <Test />
-    </>
+    <div className="App">
+      <Header className="header" />
+      <main className="main">
+        <StationMap className="stationMapContainer" />
+      </main>
+      <Footer className="footer" />
+    </div>
   );
 }
 
