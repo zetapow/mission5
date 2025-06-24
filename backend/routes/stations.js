@@ -4,7 +4,7 @@ const router = express.Router();
 // import mongoose model
 const Station = require("../models/Station.js");
 
-// Get all stations with optional viewport filtering
+// Get hall stations with optional viewport filtering
 router.get("/", async (req, res) => {
   try {
     const { west, south, east, north } = req.query;

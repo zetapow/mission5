@@ -1,84 +1,62 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 
-// Debounce utility function
-const debounce = (func, delay) => {
-  let timeoutId;
-  return (...args) => {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => func.apply(null, args), delay);
-  };
-};
-
+/**
+ * Custom hook to track the map's current view (center, zoom, bounds)
+ * Updates when user pans, zooms, or resizes the map
+ */
 export const useViewport = (map, mapLoaded, debounceMs = 300) => {
   const [viewport, setViewport] = useState(null);
   const [bounds, setBounds] = useState(null);
-  const lastViewportRef = useRef(null);
 
-  // Debounced viewport update function
-  const debouncedUpdateViewport = useCallback(
-    debounce((newViewport, newBounds) => {
-      // Only update if viewport actually changed significantly
-      const lastViewport = lastViewportRef.current;
-      if (
-        !lastViewport ||
-        Math.abs(lastViewport.zoom - newViewport.zoom) > 0.1 ||
-        Math.abs(lastViewport.center.lng - newViewport.center.lng) > 0.001 ||
-        Math.abs(lastViewport.center.lat - newViewport.center.lat) > 0.001
-      ) {
-        setViewport(newViewport);
-        setBounds(newBounds);
-        lastViewportRef.current = newViewport;
-
-        console.log("Viewport updated:", newViewport);
-      }
-    }, debounceMs),
-    [debounceMs]
-  );
-
-  const updateViewport = useCallback(() => {
-    if (!map || !mapLoaded) return;
+  // Helper function to get current map information
+  const getCurrentMapInfo = useCallback(() => {
+    if (!map || !mapLoaded) return null;
 
     const center = map.getCenter();
     const zoom = map.getZoom();
     const mapBounds = map.getBounds();
 
-    const newViewport = {
-      center: { lng: center.lng, lat: center.lat },
-      zoom: zoom,
-      timestamp: Date.now(),
+    return {
+      viewport: {
+        center: { lng: center.lng, lat: center.lat },
+        zoom: zoom,
+      },
+      bounds: {
+        north: mapBounds.getNorth(),
+        south: mapBounds.getSouth(),
+        east: mapBounds.getEast(),
+        west: mapBounds.getWest(),
+      },
     };
+  }, [map, mapLoaded]);
 
-    const newBounds = {
-      north: mapBounds.getNorth(),
-      south: mapBounds.getSouth(),
-      east: mapBounds.getEast(),
-      west: mapBounds.getWest(),
-    };
+  // Update viewport when map changes
+  const updateViewport = useCallback(() => {
+    const mapInfo = getCurrentMapInfo();
+    if (mapInfo) {
+      setViewport(mapInfo.viewport);
+      setBounds(mapInfo.bounds);
+      console.log("Map viewport updated:", mapInfo.viewport);
+    }
+  }, [getCurrentMapInfo]);
 
-    debouncedUpdateViewport(newViewport, newBounds);
-  }, [map, mapLoaded, debouncedUpdateViewport]);
-
+  // Set up map event listeners
   useEffect(() => {
     if (!map || !mapLoaded) return;
 
-    // Initial viewport
+    // Update viewport immediately when map loads
     updateViewport();
 
-    // Event listeners for map movement
-    const handleMove = () => updateViewport();
-    const handleZoom = () => updateViewport();
-    const handleResize = () => updateViewport();
+    // Listen for map changes
+    map.on("moveend", updateViewport);
+    map.on("zoomend", updateViewport);
 
-    map.on("moveend", handleMove);
-    map.on("zoomend", handleZoom);
-    map.on("resize", handleResize);
-
+    // Clean up listeners when component unmounts
     return () => {
-      map.off("moveend", handleMove);
-      map.off("zoomend", handleZoom);
-      map.off("resize", handleResize);
+      map.off("moveend", updateViewport);
+      map.off("zoomend", updateViewport);
     };
   }, [map, mapLoaded, updateViewport]);
 
-  return { viewport, bounds, updateViewport };
+  return { viewport, bounds };
 };

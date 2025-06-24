@@ -1,3 +1,50 @@
+const MARKER_CONFIG = {
+  DIMENSIONS: {
+    WIDTH: 32,
+    HEIGHT: 40,
+  },
+  IMAGE: {
+    SRC: "/src/assets/marker-service.png",
+    ALT: "Station marker",
+  },
+  POPUP: {
+    OFFSET: [0, -40],
+    CLOSE_BUTTON: true,
+    CLOSE_ON_CLICK: false,
+  },
+};
+
+const CSS_CLASSES = {
+  MARKER: "custom-station-marker",
+};
+
+function createMarkerElement() {
+  const element = document.createElement("div");
+  element.className = CSS_CLASSES.MARKER;
+  element.style.cssText = `
+    width: ${MARKER_CONFIG.DIMENSIONS.WIDTH}px;
+    height: ${MARKER_CONFIG.DIMENSIONS.HEIGHT}px;
+    position: relative;
+  `;
+  return element;
+}
+
+function createMarkerImage() {
+  const img = document.createElement("img");
+  img.src = MARKER_CONFIG.IMAGE.SRC;
+  img.alt = MARKER_CONFIG.IMAGE.ALT;
+  img.style.cssText = `
+    width: ${MARKER_CONFIG.DIMENSIONS.WIDTH}px;
+    height: ${MARKER_CONFIG.DIMENSIONS.HEIGHT}px;
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+  `;
+  return img;
+}
+
 export function createStationMarker(
   station,
   styles,
@@ -5,27 +52,10 @@ export function createStationMarker(
   maptilersdk,
   activePopupRef
 ) {
-  const el = document.createElement("div");
-  el.className = "custom-station-marker";
-  el.style.cssText = `
-    width: 32px;
-    height: 40px;
-    position: relative;
-  `;
+  const el = createMarkerElement();
 
   // Create image element for the marker
-  const img = document.createElement("img");
-  img.src = "/src/assets/marker-service.png";
-  img.alt = "Station";
-  img.style.cssText = `
-    width: 32px;
-    height: 40px;
-    cursor: pointer;
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-  `;
+  const img = createMarkerImage();
 
   el.appendChild(img);
 
@@ -65,9 +95,9 @@ export function createStationMarker(
   popupContent.appendChild(text);
 
   const popup = new maptilersdk.Popup({
-    offset: [0, -40],
-    closeButton: true,
-    closeOnClick: false,
+    offset: MARKER_CONFIG.POPUP.OFFSET,
+    closeButton: MARKER_CONFIG.POPUP.CLOSE_BUTTON,
+    closeOnClick: MARKER_CONFIG.POPUP.CLOSE_ON_CLICK,
   }).setDOMContent(popupContent);
 
   marker.setPopup(popup);

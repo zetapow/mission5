@@ -1,97 +1,105 @@
-import { useState, useEffect, useCallback, useRef } from "react";
-import { fetchStations, filterStationsByBounds } from "../util/fetchStations";
+import { useState, useEffect } from "react";
 
+/**
+ * Custom hook to fetch station data from the API
+ * Can filter stations by map bounds for better performance
+ */
 export const useStations = (
   apiUrl,
   bounds = null,
   useViewportFiltering = true
 ) => {
   const [stations, setStations] = useState([]);
-  const [allStations, setAllStations] = useState([]); // Cache all stations
+  const [allStations, setAllStations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const abortControllerRef = useRef(null);
 
-  // Fetch stations based on viewport bounds
-  const fetchStationsInBounds = useCallback(
-    async (requestBounds = null) => {
-      // Abort previous request if still pending
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
+  // Fetch stations from API
+  const fetchStations = async (requestBounds = null) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Build API URL with optional bounds filtering
+      let url = apiUrl;
+      if (useViewportFiltering && requestBounds) {
+        const params = new URLSearchParams({
+          north: requestBounds.north,
+          south: requestBounds.south,
+          east: requestBounds.east,
+          west: requestBounds.west,
+        });
+        url += `?${params.toString()}`;
       }
 
-      const controller = new AbortController();
-      abortControllerRef.current = controller;
+      console.log("Fetching stations from:", url);
+      const response = await fetch(url);
 
-      try {
-        setLoading(true);
-        setError(null);
-
-        const options = { signal: controller.signal };
-
-        // Add bounds to request if viewport filtering is enabled and bounds exist
-        if (useViewportFiltering && requestBounds) {
-          options.bounds = requestBounds;
-        }
-
-        const data = await fetchStations(apiUrl, options);
-
-        // Only process if not aborted
-        if (!controller.signal.aborted) {
-          if (useViewportFiltering && requestBounds) {
-            // For viewport-based requests, set stations directly
-            setStations(data);
-          } else {
-            // For initial load, cache all stations and filter client-side
-            setAllStations(data);
-            setStations(data);
-          }
-        }
-      } catch (err) {
-        if (err.name !== "AbortError" && !controller.signal.aborted) {
-          console.error("Error fetching stations:", err);
-          setError(err.message);
-        }
-      } finally {
-        if (!controller.signal.aborted) {
-          setLoading(false);
-        }
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    },
-    [apiUrl, useViewportFiltering]
-  );
 
-  // Initial load (get all stations or first viewport)
+      const data = await response.json();
+
+      if (useViewportFiltering && requestBounds) {
+        // For viewport requests, update current stations
+        setStations(data);
+      } else {
+        // For initial load, save all stations
+        setAllStations(data);
+        setStations(data);
+      }
+
+      console.log(`Loaded ${data.length} stations`);
+    } catch (err) {
+      console.error("Error fetching stations:", err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Filter stations by bounds (client-side)
+  const filterStationsByBounds = (stationList, filterBounds) => {
+    return stationList.filter((station) => {
+      const lng = parseFloat(station.location.longitude);
+      const lat = parseFloat(station.location.latitude);
+
+      return (
+        lng >= filterBounds.west &&
+        lng <= filterBounds.east &&
+        lat >= filterBounds.south &&
+        lat <= filterBounds.north
+      );
+    });
+  };
+
+  // Initial load - fetch all stations
   useEffect(() => {
-    fetchStationsInBounds(bounds);
+    fetchStations();
+  }, [apiUrl]);
 
-    // Cleanup function
-    return () => {
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-      }
-    };
-  }, [apiUrl]); // Only depend on apiUrl for initial load
-
-  // Handle viewport changes
+  // Update stations when map bounds change
   useEffect(() => {
-    if (bounds && useViewportFiltering) {
-      // If we have cached all stations, filter client-side for better performance
+    if (!bounds) return;
+
+    if (useViewportFiltering) {
       if (allStations.length > 0) {
+        // Filter existing stations (faster)
         const filtered = filterStationsByBounds(allStations, bounds);
         setStations(filtered);
+        console.log(`Filtered to ${filtered.length} stations in viewport`);
       } else {
-        // Otherwise fetch from server with bounds
-        fetchStationsInBounds(bounds);
+        // Fetch from server (first time)
+        fetchStations(bounds);
       }
     }
-  }, [bounds, allStations, useViewportFiltering, fetchStationsInBounds]);
+  }, [bounds, allStations, useViewportFiltering]);
 
   return {
-    stations,
-    allStations,
-    loading,
-    error,
-    refetch: () => fetchStationsInBounds(bounds),
+    stations, // Stations currently shown
+    allStations, // All stations (cached)
+    loading, // Is loading data?
+    error, // Any error message
   };
 };

@@ -1,7 +1,8 @@
 import React from "react";
+import styles from "./ErrorState.module.css";
 
 export const ErrorState = ({ error }) => (
-  <div style={{ padding: "20px", textAlign: "center", color: "red" }}>
-    <p>Error loading stations: {error}</p>
+  <div className={styles.errorContainer}>
+    <p className={styles.errorMessage}>Error loading stations: {error}</p>
   </div>
 );

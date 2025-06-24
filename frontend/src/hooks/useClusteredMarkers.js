@@ -1,5 +1,6 @@
 import { useRef, useCallback, useEffect } from "react";
 import { createClusterMarker, createStationPopup } from "../util/clusterUtils";
+import { error } from "node:console";
 
 export const useClusteredMarkers = (
   map,
@@ -15,8 +16,8 @@ export const useClusteredMarkers = (
     markersRef.current.forEach((marker) => {
       try {
         marker.remove();
-      } catch (e) {
-        console.warn("Error removing marker:", e);
+      } catch (err) {
+        console.warn("Error removing marker:", error);
       }
     });
     markersRef.current = [];

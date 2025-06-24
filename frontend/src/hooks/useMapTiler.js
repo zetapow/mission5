@@ -2,66 +2,59 @@
 import { useState, useEffect, useRef } from "react";
 import * as maptilersdk from "@maptiler/sdk";
 
+/**
+ * Custom hook to create and manage a MapTiler map instance
+ * Returns the map object and loading state
+ */
 export function useMapTiler(apiKey, containerRef, options) {
   const mapRef = useRef(null);
   const [mapLoaded, setMapLoaded] = useState(false);
 
   useEffect(() => {
-    console.log("useMapTiler effect running:", {
-      hasContainer: !!containerRef.current,
-      hasMap: !!mapRef.current,
-      hasApiKey: !!apiKey,
-      options,
-    });
-
-    if (!containerRef.current || mapRef.current || !apiKey) {
-      console.log("useMapTiler early return:", {
-        noContainer: !containerRef.current,
-        mapExists: !!mapRef.current,
-        noApiKey: !apiKey,
-      });
+    // Don't create map if we don't have what we need
+    if (!containerRef.current || !apiKey || mapRef.current) {
       return;
     }
 
     console.log("Creating MapTiler map...");
 
     try {
-      // Set API key globally for better performance
+      // Set up API key
       maptilersdk.config.apiKey = apiKey;
 
-      // Create map with performance optimizations
+      // Create the map
       mapRef.current = new maptilersdk.Map({
         container: containerRef.current,
         ...options,
-        // Additional performance settings
-        fadeDuration: 0, // No fade animation for faster loading
-        crossSourceCollisions: false, // Disable collision detection
       });
 
-      console.log("Map created successfully:", mapRef.current);
-
-      // Use 'style.load' instead of 'load' for faster detection
-      mapRef.current.on("style.load", () => {
-        console.log("Map style loaded!");
+      // Wait for map to finish loading
+      mapRef.current.on("load", () => {
+        console.log("Map loaded successfully!");
         setMapLoaded(true);
       });
 
-      // Handle errors
-      mapRef.current.on("error", (e) => {
-        console.error("Map error:", e);
+      // Handle any errors
+      mapRef.current.on("error", (error) => {
+        console.error("Map error:", error);
       });
     } catch (error) {
-      console.error("Error creating map:", error);
+      console.error("Failed to create map:", error);
     }
 
+    // Clean up when component unmounts
     return () => {
       if (mapRef.current) {
+        console.log("Cleaning up map...");
         mapRef.current.remove();
         mapRef.current = null;
         setMapLoaded(false);
       }
     };
-  }, [apiKey, containerRef.current]); // Add containerRef.current as dependency
+  }, [apiKey, containerRef.current]);
 
-  return { map: mapRef.current, mapLoaded };
+  return {
+    map: mapRef.current, // The map instance
+    mapLoaded, // Whether map is ready to use
+  };
 }

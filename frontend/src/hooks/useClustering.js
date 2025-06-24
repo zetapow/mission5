@@ -1,24 +1,22 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import Supercluster from "supercluster";
 
+/**
+ * Custom hook to cluster nearby stations together
+ * Uses Supercluster library to group stations based on zoom level
+ */
 export const useClustering = (stations, map, mapLoaded) => {
   const [clusters, setClusters] = useState([]);
-  const [zoom, setZoom] = useState(6);
-  const [bounds, setBounds] = useState(null);
   const superclusterRef = useRef(null);
 
-  // Initialize supercluster
-  useEffect(() => {
-    if (!stations || stations.length === 0) return;
-
-    // Convert stations to GeoJSON points
-    const points = stations.map((station, index) => ({
+  // Convert stations to format that Supercluster can use
+  const prepareStationData = (stationList) => {
+    return stationList.map((station) => ({
       type: "Feature",
       properties: {
         cluster: false,
         stationId: station._id,
         station: station,
-        index: index,
       },
       geometry: {
         type: "Point",
@@ -28,81 +26,85 @@ export const useClustering = (stations, map, mapLoaded) => {
         ],
       },
     }));
+  };
 
-    // Initialize supercluster
+  // Set up clustering when stations change
+  useEffect(() => {
+    if (!stations || stations.length === 0) {
+      setClusters([]);
+      return;
+    }
+
+    console.log(`Setting up clustering for ${stations.length} stations...`);
+
+    // Prepare station data for clustering
+    const points = prepareStationData(stations);
+
+    // Create clustering engine
     superclusterRef.current = new Supercluster({
       radius: 40, // Cluster radius in pixels
-      maxZoom: 16, // Max zoom to cluster points on
-      minZoom: 0, // Min zoom to cluster points on
-      minPoints: 2, // Minimum points to form a cluster
+      maxZoom: 16, // Stop clustering at this zoom level
+      minPoints: 2, // Minimum stations needed to form a cluster
     });
 
+    // Load stations into clustering engine
     superclusterRef.current.load(points);
-    console.log("Supercluster initialized with", points.length, "points");
+    console.log("Clustering initialized");
   }, [stations]);
 
-  // Update clusters when map viewport changes
-  const updateClusters = useCallback(() => {
-    if (!map || !mapLoaded || !superclusterRef.current) return;
+  // Update clusters when map view changes
+  const updateClusters = () => {
+    if (!map || !mapLoaded || !superclusterRef.current) {
+      return;
+    }
 
+    // Get current map bounds and zoom
     const mapBounds = map.getBounds();
-    const mapZoom = Math.floor(map.getZoom());
+    const currentZoom = Math.floor(map.getZoom());
 
+    // Define the area to get clusters for
     const bbox = [
-      mapBounds.getWest(),
-      mapBounds.getSouth(),
-      mapBounds.getEast(),
-      mapBounds.getNorth(),
+      mapBounds.getWest(), // left
+      mapBounds.getSouth(), // bottom
+      mapBounds.getEast(), // right
+      mapBounds.getNorth(), // top
     ];
 
-    const newClusters = superclusterRef.current.getClusters(bbox, mapZoom);
-
+    // Get clusters for current view
+    const newClusters = superclusterRef.current.getClusters(bbox, currentZoom);
     setClusters(newClusters);
-    setZoom(mapZoom);
-    setBounds(bbox);
 
     console.log(
-      `Updated clusters: ${newClusters.length} items at zoom ${mapZoom}`
+      `Updated clusters: ${newClusters.length} items at zoom ${currentZoom}`
     );
-  }, [map, mapLoaded]);
+  };
 
-  // Set up map event listeners
+  // Listen for map changes
   useEffect(() => {
     if (!map || !mapLoaded) return;
 
-    // Initial update
+    // Update clusters immediately
     updateClusters();
 
-    // Event listeners
-    const handleMapMove = () => updateClusters();
+    // Update clusters when map moves or zooms
+    map.on("moveend", updateClusters);
+    map.on("zoomend", updateClusters);
 
-    map.on("move", handleMapMove);
-    map.on("zoom", handleMapMove);
-
+    // Clean up listeners
     return () => {
-      map.off("move", handleMapMove);
-      map.off("zoom", handleMapMove);
+      map.off("moveend", updateClusters);
+      map.off("zoomend", updateClusters);
     };
-  }, [map, mapLoaded, updateClusters]);
+  }, [map, mapLoaded, stations]);
 
-  // Get cluster expansion bounds
-  const getClusterExpansionZoom = useCallback((clusterId) => {
+  // Function to expand a cluster when clicked
+  const getClusterExpansionZoom = (clusterId) => {
     if (!superclusterRef.current) return null;
     return superclusterRef.current.getClusterExpansionZoom(clusterId);
-  }, []);
-
-  // Get cluster children
-  const getClusterChildren = useCallback((clusterId) => {
-    if (!superclusterRef.current) return [];
-    return superclusterRef.current.getChildren(clusterId);
-  }, []);
+  };
 
   return {
-    clusters,
-    zoom,
-    bounds,
-    updateClusters,
-    getClusterExpansionZoom,
-    getClusterChildren,
+    clusters, // Current clusters to display
+    getClusterExpansionZoom, // Function to expand clusters
   };
 };

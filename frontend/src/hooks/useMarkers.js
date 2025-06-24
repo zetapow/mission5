@@ -1,6 +1,10 @@
-import { useRef, useCallback, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { createStationMarker } from "../util/mapMarkerUtils";
 
+/**
+ * Custom hook to manage individual station markers on the map
+ * Creates, updates, and removes markers as stations change
+ */
 export const useMarkers = (
   map,
   mapLoaded,
@@ -12,48 +16,55 @@ export const useMarkers = (
   const markersRef = useRef([]);
   const activePopupRef = useRef(null);
 
-  const clearMarkers = useCallback(() => {
+  // Remove all markers from the map
+  const clearMarkers = () => {
     markersRef.current.forEach((marker) => {
       try {
         marker.remove();
-      } catch (e) {
-        console.warn("Error removing marker:", e);
+      } catch (error) {
+        console.warn("Error removing marker:", error);
       }
     });
     markersRef.current = [];
-  }, []);
+    console.log("Cleared all markers");
+  };
 
-  const clearActivePopup = useCallback(() => {
+  // Close any open popup
+  const closeActivePopup = () => {
     if (activePopupRef.current) {
       try {
         activePopupRef.current.remove();
         activePopupRef.current = null;
-      } catch (e) {
-        console.warn("Error removing active popup:", e);
+      } catch (error) {
+        console.warn("Error closing popup:", error);
       }
     }
-  }, []);
+  };
 
-  const updateMarkers = useCallback(() => {
-    if (!map || !mapLoaded || stations.length === 0) return;
+  // Create markers for all stations
+  const createMarkers = () => {
+    if (!map || !mapLoaded || stations.length === 0) {
+      return;
+    }
 
+    console.log(`Creating ${stations.length} station markers...`);
+
+    // Clear existing markers first
     clearMarkers();
-    clearActivePopup();
+    closeActivePopup();
 
+    // Create a marker for each station
     stations.forEach((station) => {
+      // Check if station has valid coordinates
       const lng = parseFloat(station.location.longitude);
       const lat = parseFloat(station.location.latitude);
 
       if (isNaN(lng) || isNaN(lat)) {
-        console.warn(
-          "Invalid coordinates for station:",
-          station.name,
-          lng,
-          lat
-        );
+        console.warn(`Invalid coordinates for station: ${station.name}`);
         return;
       }
 
+      // Create and add marker to map
       const marker = createStationMarker(
         station,
         styles,
@@ -61,25 +72,18 @@ export const useMarkers = (
         maptilersdk,
         activePopupRef
       );
+
       marker.addTo(map);
       markersRef.current.push(marker);
     });
-  }, [
-    map,
-    mapLoaded,
-    stations,
-    clearMarkers,
-    clearActivePopup,
-    styles,
-    markerServiceIcon,
-    maptilersdk,
-  ]);
 
+    console.log(`Added ${markersRef.current.length} markers to map`);
+  };
+
+  // Update markers whenever stations change
   useEffect(() => {
-    if (mapLoaded && map && stations.length > 0) {
-      updateMarkers();
-    }
-  }, [mapLoaded, map, stations, updateMarkers]);
+    createMarkers();
+  }, [map, mapLoaded, stations]);
 
-  return { updateMarkers };
+  return { clearMarkers };
 };

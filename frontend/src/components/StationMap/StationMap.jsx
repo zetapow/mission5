@@ -25,15 +25,16 @@ const API_URL = `${MAP_CONFIG.API_BASE_URL}/stations`;
 const StationMap = () => {
   const apiKey = import.meta.env.VITE_MAPTILER_API;
   const mapContainer = useRef(null);
+
   // Debug logging
   console.log("StationMap render - API Key:", apiKey ? "Present" : "Missing");
 
   // Early return if no API key
   if (!apiKey) {
     return (
-      <div style={{ padding: "20px", textAlign: "center", color: "red" }}>
+      <div className={styles.apiKeyError}>
         <p>Missing MapTiler API key</p>
-        <p>Please check your .env file and ensure VITE_MAPTILER_API is set</p>
+        <p>Please check the .env file and ensure VITE_MAPTILER_API is set</p>
       </div>
     );
   }
@@ -47,10 +48,11 @@ const StationMap = () => {
       console.error("No API key found!");
     }
   }, [apiKey]);
+
   // Optimized map options with performance settings
   const mapOptions = useMemo(
     () => ({
-      style: `https://api.maptiler.com/maps/streets/style.json?key=${apiKey}`, // Using regular streets for debugging
+      style: `https://api.maptiler.com/maps/streets/style.json?key=${apiKey}`,
       center: MAP_CONFIG.DEFAULT_CENTER,
       zoom: MAP_CONFIG.DEFAULT_ZOOM,
       // Performance optimizations
@@ -63,6 +65,7 @@ const StationMap = () => {
     }),
     [apiKey]
   );
+
   // Custom hooks
   const { map, mapLoaded } = useMapTiler(apiKey, mapContainer, mapOptions);
   const { viewport, bounds } = useViewport(
@@ -108,7 +111,9 @@ const StationMap = () => {
     stationsCount: stations.length,
     loading,
     error: !!error,
-  }); // Early returns for different states
+  });
+
+  // Early returns for different states
   if (error) return <ErrorState error={error} />;
 
   return (
@@ -119,22 +124,10 @@ const StationMap = () => {
         id="map-container"
       />
       {loading && (
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "rgba(255, 255, 255, 0.9)",
-            zIndex: 1000,
-          }}>
+        <div className={styles.loadingOverlay}>
           <LoadingState />
         </div>
-      )}{" "}
+      )}
       <InfoBox
         stationCount={stations.length}
         viewport={viewport}

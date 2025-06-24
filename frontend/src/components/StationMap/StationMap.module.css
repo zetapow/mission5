@@ -1,7 +1,7 @@
 .mapWrapper {
   display: flex;
   justify-content: center;
-  max-width: 70%;
+  max-width: 100%;
   height: 50rem;
   border: 1px solid var(--neutral-100);
   position: relative;
@@ -9,82 +9,166 @@
 
 @media (max-width: 768px) {
   .mapWrapper {
-    max-width: 97%;
+    max-width: 95%;
     height: 40rem;
   }
 }
 
 .mapContainer {
-  justify-content: center;
   width: 100%;
   height: 100%;
 }
 
-/* Cluster marker styles */
+/* NEW: Loading overlay styles */
+.loadingOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(2px);
+  z-index: 1000;
+}
+
+/* NEW: API key error styles */
+.apiKeyError {
+  padding: calc(var(--base-unit) * 5); /* 20px */
+  text-align: center;
+  color: var(
+    --primary
+  ); /* Use your design system color instead of generic red */
+  background-color: var(--primary-100);
+  border: 1px solid var(--primary-300);
+  border-radius: calc(var(--base-unit) * 2);
+  margin: calc(var(--base-unit) * 4) 0;
+}
+
+.apiKeyError p {
+  margin: calc(var(--base-unit) * 2) 0;
+  font-size: var(--font-size-s);
+}
+
+.apiKeyError p:first-child {
+  font-weight: 600;
+  font-size: var(--font-size-m);
+}
+
+/* Enhanced cluster marker styles */
 .cluster-marker {
   border-radius: 50% !important;
-  color: white !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+  color: white !important;
   font-weight: bold !important;
+  font-size: var(--font-size-xs) !important;
   cursor: pointer !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
   transition: transform 0.2s ease, box-shadow 0.2s ease !important;
-  transform-origin: center center !important;
   border: none !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
 }
 
 .cluster-marker:hover {
   transform: scale(1.1) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
 }
 
+/* Station marker styles */
 .stationMarker {
-  position: relative !important;
   cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
+.stationMarker:hover {
+  transform: scale(1.1);
+}
+
+/* Info box styles */
 .infoBox {
   position: absolute;
-  top: calc(var(--base-unit) * 2.5);
-  left: calc(var(--base-unit) * 2.5);
-  background: rgba(255, 255, 255, 0.95);
-  padding: calc(var(--base-unit) * 2) calc(var(--base-unit) * 3);
-  border-radius: calc(var(--base-unit) * 1.5);
-  font-size: var(--font-size-xs);
-  z-index: 1000;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  top: calc(var(--base-unit) * 2);
+  right: calc(var(--base-unit) * 2);
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(4px);
   border: 1px solid var(--neutral-200);
-}
-
-.infoTitle {
-  color: var(--primary);
-  font-weight: bold;
-  margin-bottom: calc(var(--base-unit) * 0.5);
-}
-
-.infoText {
-  color: var(--neutral-300);
-}
-
-.infoSmall {
-  color: var(--neutral-300);
-  font-size: var(--font-size-xs);
-}
-
-.stationPopup {
-  padding: 10px;
+  border-radius: calc(var(--base-unit) * 2);
+  padding: calc(var(--base-unit) * 3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: inherit;
+  z-index: 1000;
   min-width: 200px;
 }
 
-.stationPopupTitle {
-  margin: 0 0 8px 0;
-  color: var(--secondary);
-  font-size: var(--font-size-h4);
+.infoTitle {
+  font-size: var(--font-size-m);
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: calc(var(--base-unit) * 1);
 }
 
-.stationPopupText {
+.infoText {
+  font-size: var(--font-size-s);
+  color: var(--neutral-700);
+  margin-bottom: calc(var(--base-unit) * 1);
+  line-height: 1.4;
+}
+
+.infoSmall {
   font-size: var(--font-size-xs);
   color: var(--neutral-300);
+  line-height: 1.3;
+}
+
+/* Styling marker popups */
+:global(.station-popup) {
+  padding: calc(var(--base-unit) * 2.5); /* 10px using your design system */
+  min-width: 200px;
+  font-family: inherit;
+}
+
+:global(.station-popup-title) {
+  margin: 0 0 calc(var(--base-unit) * 2) 0; /* 8px bottom margin */
+  color: var(--primary); /* Use your design system color instead of #333 */
+  font-size: var(--font-size-m);
+  font-weight: 600;
+}
+
+:global(.station-popup-address) {
+  margin: 0 0 calc(var(--base-unit) * 1) 0; /* 4px bottom margin */
+  color: var(--neutral-300); /* Use your design system color instead of #666 */
+  font-size: var(--font-size-s);
+}
+
+:global(.station-popup-city) {
+  margin: 0;
+  color: var(--neutral-300);
+  font-size: var(--font-size-s);
+  font-weight: 600;
+}
+
+:global(.station-popup-error) {
+  padding: calc(var(--base-unit) * 2);
+  color: var(--primary);
+  font-size: var(--font-size-s);
+  text-align: center;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .mapWrapper {
+    max-width: 95%;
+    height: 40rem;
+  }
+
+  .infoBox {
+    top: calc(var(--base-unit) * 1);
+    right: calc(var(--base-unit) * 1);
+    left: calc(var(--base-unit) * 1);
+    min-width: auto;
+    padding: calc(var(--base-unit) * 2);
+  }
 }
