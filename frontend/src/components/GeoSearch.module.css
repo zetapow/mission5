@@ -5,6 +5,7 @@
   background: var(--white);
   border-radius: calc(var(--base-unit) * 2);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  background: var(--gradient-main, linear-gradient(90deg, #ED560E 0%, #F57708 45.19%, #FFA000 100%));
 }
 
 .results {
@@ -16,3 +17,8 @@
   overflow-x: auto;
   color: var(--neutral-900);
 }
+
+.current_location {
+  display: flex;
+}
+
