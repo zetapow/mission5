@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./GeoSearch.module.css"; // Assuming you have a CSS file for styles
 
+import geolocation from "../assets/icons/geolocation.svg";
 import { geocode } from "../util/geocodeApi";
 import SearchInput from "./shared/SearchInput";
 
@@ -29,6 +30,7 @@ function GeoSearch() {
 
   return (
     <div className={styles.geoSearchContainer}>
+      <p>Search Z stations</p>
       <form onSubmit={handleSearch}>
         <SearchInput
           value={query}
@@ -39,6 +41,10 @@ function GeoSearch() {
       <pre className={styles.results}>
         {results && JSON.stringify(results, null, 2)}
       </pre>
+      <div className={styles.current_location}>
+        <img src={geolocation} alt="geolocation" />
+        <p>Use my current location</p>
+      </div>
     </div>
   );
 }
