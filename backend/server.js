@@ -41,24 +41,8 @@ app.use("/api/maptiler", maptilerRoutes);
 app.use("/api/stations", stationRoutes);
 app.use("/api/stations-search", stationSearch);
 
-// Connect to MongoDB using Mongoose
-mongoose.connect(MONGODB_CONNECTION)
-  .then(() => {
-    console.log("MongoDB connected successfully.");
-
-  // Routes
-  app.use("/api/maptiler", maptilerRoutes);
-  app.use("/api/stations", stationRoutes);
-  app.use("/api/stations-search", stationSearch);
-
-  // server start
-  const PORT = process.env.PORT || 4000;
-  app.listen(PORT, () => {
+// server start
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-  });
-
-})
-.catch((err)=> {
-  console.error("MongoDB connection failed:", err.message);
-  process.exit(1);
 });
