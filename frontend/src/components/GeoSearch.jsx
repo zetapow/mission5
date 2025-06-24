@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "./GeoSearch.module.css"; // Assuming you have a CSS file for styles
 
 import geolocation from "../assets/icons/geolocation.svg";
