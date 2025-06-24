@@ -1,0 +1,23 @@
+.errorContainer {
+  padding: calc(var(--base-unit) * 5);
+  text-align: center;
+  color: var(--primary);
+  background-color: var(--primary-100);
+  border: 1px solid var(--primary-300);
+  border-radius: calc(var(--base-unit) * 2);
+  margin: calc(var(--base-unit) * 4) 0;
+}
+
+.errorMessage {
+  margin: 0;
+  font-size: var(--font-size-m);
+  font-weight: 500;
+}
+
+/* Add an icon */
+.errorContainer::before {
+  content: "⚠️";
+  display: block;
+  font-size: var(--font-size-xl);
+  margin-bottom: calc(var(--base-unit) * 2);
+}
