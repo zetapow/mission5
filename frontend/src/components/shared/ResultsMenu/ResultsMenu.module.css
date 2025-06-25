@@ -4,6 +4,7 @@
     border-style: solid;
     width: 40vw;
     border-radius: 15px;
+    z-index: 1;
 }
 
 .buttonsBox{
