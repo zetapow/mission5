@@ -54,6 +54,7 @@ StationSchema.index(
     "fuels.name": "text",
   },
   {
+    name: "station fulltext index",
     weights: {
       "name": 10,
       "location.address": 9,
@@ -68,6 +69,6 @@ StationSchema.index(
   }
 );
 
-StationSchema.index({ uuid: 1 }, { unique: true });
+// StationSchema.index({ "uuid": 1 }, { unique: true });
 
 module.exports = mongoose.model("Station", StationSchema);

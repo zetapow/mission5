@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 // import mondoose model
-const Station = require("../models/station.js");
+const Station = require("../models/Station.js");
 
 router.get("/", async (req, res) => {
   try {
