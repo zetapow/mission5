@@ -37,8 +37,8 @@ export function filterStationsByBounds(stations, bounds) {
   if (!bounds || !stations) return stations;
 
   return stations.filter((station) => {
-    const lng = parseFloat(station.location.longitude);
-    const lat = parseFloat(station.location.latitude);
+    const lng = station.location.longitude;
+    const lat = station.location.latitude;
 
     return (
       lng >= bounds.west &&

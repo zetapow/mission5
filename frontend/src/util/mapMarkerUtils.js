@@ -63,10 +63,7 @@ export function createStationMarker(
     element: el,
     anchor: "bottom",
     offset: [0, 0],
-  }).setLngLat([
-    parseFloat(station.location.longitude),
-    parseFloat(station.location.latitude),
-  ]);
+  }).setLngLat([station.location.longitude, station.location.latitude]);
 
   // Create popup for station
   const popupContent = document.createElement("div");
