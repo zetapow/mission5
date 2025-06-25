@@ -1,4 +1,7 @@
 .geoSearchContainer {
+  z-index: 1000;
+  left: 3rem;
+  top: 3rem;
   display: flex;
   width: 28.3125rem;
   height: 13.1875rem;
@@ -8,8 +11,10 @@
   align-items: center;
   gap: 1rem;
   position: absolute;
-  left: 10.4375rem;
-  top: 11.875rem;
+  /* left: 10.4375rem;
+  top: 11.875rem; */
+  left: 3rem;
+  top: 3rem;
   border-radius: 2.5rem;
   background: var(
     --gradient-main,
@@ -185,7 +190,7 @@ form {
 
 .fuelWrapper {
   position: relative;
-  display: inline-block; 
+  display: inline-block;
 }
 
 .dropDown {
@@ -214,10 +219,13 @@ form {
 
 @media (max-width: 768px) {
   .geoSearchContainer {
-    width: 100%;
+    width: calc(100% - 1rem);
     left: 0;
     border-radius: 0;
-    height: 16rem;
-    position: static;
+    top: 0;
+    /* height: 16rem; */
+    height: auto;
+    /* position: static; */
+    position: absolute;
   }
 }
