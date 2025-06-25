@@ -11,6 +11,7 @@ function App() {
     <div className="App">
       <Header className="header" />
       <main className="main">
+        <GeoSearch />
         <StationMap className="stationMapContainer" />
         <ResultsMenu />
       </main>

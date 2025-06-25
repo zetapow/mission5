@@ -50,37 +50,37 @@ const StationSchema = new mongoose.Schema({
   ],
 });
 
-// Text index
+
 StationSchema.index(
   {
     "name": "text",
-    "location.city": "text",
-    "location.suburb": "text",
     "location.address": "text",
+    "location.suburb": "text",
+    "location.city": "text",
     "location.region": "text",
+    "location.postcode": "text",
     "services.name": "text",
-    "services.summary": "text",
     "fuels.name": "text",
-    "fuels.short_name": "text",
   },
-
   {
-    name: "station_fulltext_index",
+    name: "station fulltext index",
     weights: {
       "name": 10,
+      "location.address": 9,
+      "location.suburb": 8,
       "location.city": 8,
-      "location.suburb": 6,
-      "location.address": 5,
-      "location.region": 4,
-      "services.name": 9,
-      "services.summary": 4,
-      "fuels.name": 7,
-      "fuels.short_name": 6,
+      "location.region": 7,
+      "location.postcode": 5,
+      "services.name": 8,
+      "fuels.name": 6,
+
     },
     default_language: "en"
   }
 );
 
+
 StationSchema.index({ "uuid": 1 }, { unique: true });
+
 
 module.exports = mongoose.model("Station", StationSchema);
