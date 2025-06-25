@@ -25,35 +25,24 @@ router.get("/", async (req, res) => {
             "Invalid coordinates. All bounding box values must be numbers.",
         });
       }
-
       console.log(`Fetching stations within bounds:`, bounds);
 
       // Query stations within the bounding box
-      // Note: MongoDB aggregation pipeline for numeric comparison on string fields
-      const stations = await Station.aggregate([
+      // Now using direct numeric comparison since coordinates are stored as numbers
+      const stations = await Station.find(
         {
-          $addFields: {
-            "location.lat_num": { $toDouble: "$location.latitude" },
-            "location.lng_num": { $toDouble: "$location.longitude" },
-          },
+          "location.latitude": { $gte: bounds.south, $lte: bounds.north },
+          "location.longitude": { $gte: bounds.west, $lte: bounds.east },
         },
         {
-          $match: {
-            "location.lat_num": { $gte: bounds.south, $lte: bounds.north },
-            "location.lng_num": { $gte: bounds.west, $lte: bounds.east },
-          },
-        },
-        {
-          $project: {
-            name: 1,
-            "location.latitude": 1,
-            "location.longitude": 1,
-            "location.address": 1,
-            "location.city": 1,
-            "location.suburb": 1,
-          },
-        },
-      ]);
+          name: 1,
+          "location.latitude": 1,
+          "location.longitude": 1,
+          "location.address": 1,
+          "location.city": 1,
+          "location.suburb": 1,
+        }
+      );
 
       console.log(`Found ${stations.length} stations in viewport`);
       res.json(stations);

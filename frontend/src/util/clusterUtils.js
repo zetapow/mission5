@@ -5,9 +5,9 @@ const CLUSTER_CONFIG = {
     MEDIUM_THRESHOLD: 25, // Threshold for medium clusters
 
     // Sizes for cluster markers based on point count
-    SMALL_SIZE: 30,
-    MEDIUM_SIZE: 40,
-    LARGE_SIZE: 50,
+    SMALL_SIZE: 40,
+    MEDIUM_SIZE: 60,
+    LARGE_SIZE: 80,
   },
   COLORS: {
     SMALL: "rgba(255, 160, 0, 0.9)", // Base accent color with transparency

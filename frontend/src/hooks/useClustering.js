@@ -20,10 +20,7 @@ export const useClustering = (stations, map, mapLoaded) => {
       },
       geometry: {
         type: "Point",
-        coordinates: [
-          parseFloat(station.location.longitude),
-          parseFloat(station.location.latitude),
-        ],
+        coordinates: [station.location.longitude, station.location.latitude],
       },
     }));
   };

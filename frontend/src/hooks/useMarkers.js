@@ -51,15 +51,18 @@ export const useMarkers = (
 
     // Clear existing markers first
     clearMarkers();
-    closeActivePopup();
-
-    // Create a marker for each station
+    closeActivePopup(); // Create a marker for each station
     stations.forEach((station) => {
       // Check if station has valid coordinates
-      const lng = parseFloat(station.location.longitude);
-      const lat = parseFloat(station.location.latitude);
+      const lng = station.location.longitude;
+      const lat = station.location.latitude;
 
-      if (isNaN(lng) || isNaN(lat)) {
+      if (
+        typeof lng !== "number" ||
+        typeof lat !== "number" ||
+        isNaN(lng) ||
+        isNaN(lat)
+      ) {
         console.warn(`Invalid coordinates for station: ${station.name}`);
         return;
       }
