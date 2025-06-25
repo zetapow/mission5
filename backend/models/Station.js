@@ -72,11 +72,9 @@ const StationSchema = new mongoose.Schema({
   ],
 });
 
+// Fixed text index - removed duplicates
 StationSchema.index(
   {
-    name: "text",
-    "location.city": "text",
-    "location.suburb": "text",
     name: "text",
     "location.address": "text",
     "location.suburb": "text",
@@ -87,9 +85,8 @@ StationSchema.index(
     "fuels.name": "text",
   },
   {
-    name: "station fulltext index",
+    name: "station_fulltext_index",
     weights: {
-      name: 10,
       name: 10,
       "location.address": 9,
       "location.suburb": 8,
