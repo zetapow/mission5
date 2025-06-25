@@ -20,18 +20,28 @@
 .main {
   grid-area: main;
   width: 100%;
-  min-height: 0; /* Allow flexbox to work properly */
-  padding: clamp(0.5rem, 1vw, 1rem);
+  min-height: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+/* Container to hold map and search overlay */
+.mapContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  min-height: 0;
 }
 
 .stationMapContainer {
   width: 100%;
   height: 100%;
   flex: 1;
-  min-height: 0; /* allow map to shrink */
+  min-height: 0;
+  z-index: 0;
 }
 
 .footer {
@@ -41,12 +51,12 @@
 /* Mobile responsive */
 @media (max-width: 768px) {
   .App {
-    max-height: none; /* Allow mobile to expand */
-    overflow: visible; /* Allow mobile scrolling */
+    max-height: none; /* mobile to expand */
+    overflow: visible; /* mobile scrolling */
   }
 
   .main {
-    padding: clamp(0.25rem, 0.5vw, 0.75rem);
-    overflow: visible; /* Allow main content to scroll */
+    padding: 0;
+    overflow: visible; /* main content to scroll */
   }
 }

@@ -19,8 +19,30 @@ const StationSchema = new mongoose.Schema({
     city: String,
     region: String,
     postcode: String,
-    latitude: String,
-    longitude: String,
+    latitude: {
+      type: Number,
+      required: true,
+      min: -90,
+      max: 90,
+      validate: {
+        validator: function (v) {
+          return !isNaN(v) && isFinite(v);
+        },
+        message: "Latitude must be a valid number between -90 and 90",
+      },
+    },
+    longitude: {
+      type: Number,
+      required: true,
+      min: -180,
+      max: 180,
+      validate: {
+        validator: function (v) {
+          return !isNaN(v) && isFinite(v);
+        },
+        message: "Longitude must be a valid number between -180 and 180",
+      },
+    },
   },
   opening_hours: [
     {
@@ -33,9 +55,9 @@ const StationSchema = new mongoose.Schema({
     {
       name: String,
       show_on_locator: Boolean,
-      icon: String, 
+      icon: String,
       slug: String,
-      brand: String, 
+      brand: String,
       short_name: String,
     },
   ],
@@ -50,10 +72,10 @@ const StationSchema = new mongoose.Schema({
   ],
 });
 
-
+// Fixed text index - removed duplicates
 StationSchema.index(
   {
-    "name": "text",
+    name: "text",
     "location.address": "text",
     "location.suburb": "text",
     "location.city": "text",
@@ -63,9 +85,9 @@ StationSchema.index(
     "fuels.name": "text",
   },
   {
-    name: "station fulltext index",
+    name: "station_fulltext_index",
     weights: {
-      "name": 10,
+      name: 10,
       "location.address": 9,
       "location.suburb": 8,
       "location.city": 8,
@@ -73,14 +95,11 @@ StationSchema.index(
       "location.postcode": 5,
       "services.name": 8,
       "fuels.name": 6,
-
     },
-    default_language: "en"
+    default_language: "en",
   }
 );
 
-
-StationSchema.index({ "uuid": 1 }, { unique: true });
-
+StationSchema.index({ uuid: 1 }, { unique: true });
 
 module.exports = mongoose.model("Station", StationSchema);

@@ -58,12 +58,11 @@ export const useStations = (
       setLoading(false);
     }
   };
-
   // Filter stations by bounds (client-side)
   const filterStationsByBounds = (stationList, filterBounds) => {
     return stationList.filter((station) => {
-      const lng = parseFloat(station.location.longitude);
-      const lat = parseFloat(station.location.latitude);
+      const lng = station.location.longitude;
+      const lat = station.location.latitude;
 
       return (
         lng >= filterBounds.west &&
