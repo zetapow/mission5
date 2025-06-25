@@ -1,0 +1,160 @@
+:root {
+  --gradient-orange-start: #ed560e;
+  --gradient-orange-middle: #f57708;
+  --gradient-orange-end: #ffa000;
+  --gradient-orange-hover-start: #d84a0c;
+  --gradient-orange-hover-middle: #e06806;
+  --gradient-orange-hover-end: #ff9500;
+}
+
+.footerWrapper {
+  width: 100%;
+  background-color: var(--white);
+  border-top: 1px solid #e9ecef;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1rem, 1.5vw, 2rem);
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.logoContainer {
+  flex-shrink: 0;
+  min-width: min(120px, 100%);
+}
+
+.logo {
+  height: clamp(2.5rem, 5vw, 3rem);
+  width: auto;
+  max-width: 100%;
+}
+
+.textBlock {
+  flex: 1 1 160px;
+  min-width: 0;
+  max-width: min(200px, 100%);
+}
+
+.footerList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+  line-height: 1.5;
+}
+
+.footerList li {
+  margin-bottom: 0.5em;
+  color: #495057;
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+.footerList li:first-child {
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 0.75em;
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+  cursor: default;
+}
+
+.footerList li:not(:first-child):hover {
+  color: #000;
+}
+
+.contactButton {
+  background: linear-gradient(90deg, #ed560e 0%, #f57708 45%, #ffa000 100%);
+  color: white;
+  border: none;
+  border-radius: 1.5rem;
+  padding: 0.75rem 1.25rem;
+  font-size: clamp(0.875rem, 2vw, 1rem);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: max-content;
+  box-shadow: 0 0.125rem 0.5rem rgba(237, 86, 14, 0.2);
+  flex-shrink: 0;
+}
+
+.contactButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.25rem 0.75rem rgba(237, 86, 14, 0.3);
+  background: linear-gradient(90deg, #d84a0c 0%, #e06806 45%, #ff9500 100%);
+}
+
+.circle {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+  box-shadow: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.circle img {
+  width: 0.875rem; /* ✅ Rem units */
+  height: 1rem;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(38%) sepia(97%) saturate(1742%)
+    hue-rotate(15deg) brightness(94%) contrast(94%);
+}
+
+.contactButton:hover .circle {
+  transform: scale(1.05);
+}
+
+/* responsive design */
+@media (max-width: 768px) {
+  .footerWrapper {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: left;
+    gap: clamp(1rem, 3vw, 1.5rem);
+    padding: clamp(1.5rem, 4vw, 2rem);
+  }
+
+  .logoContainer {
+    order: 1; /* First */
+  }
+
+  .contactButton {
+    order: 2; /* Second - right after logo */
+    align-self: flex-start;
+    padding: 0.625rem 1rem;
+    margin: 0;
+  }
+
+  .textBlock {
+    order: 3; /* All text blocks come after button */
+    flex: none;
+    max-width: none;
+    margin-bottom: 0;
+  }
+
+  .circle {
+    width: 1.875rem;
+    height: 1.875rem;
+  }
+
+  .circle img {
+    width: 0.75rem;
+    height: 0.875rem;
+  }
+}
+
+/* Small screens */
+@media (max-width: 480px) {
+  .footerWrapper {
+    padding: clamp(1rem, 3vw, 1.5rem);
+    gap: clamp(0.75rem, 2vw, 1rem);
+  }
+}

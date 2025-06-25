@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const StationSchema = new mongoose.Schema({
-  uuid: { type: String, required: true, unique: true },
+  // uuid: { type: String, required: true, unique: true },
   last_edited: String,
   name: String,
   type: String,
@@ -32,15 +32,24 @@ const StationSchema = new mongoose.Schema({
   fuels: [
     {
       name: String,
+      show_on_locator: Boolean,
+      icon: String, 
+      slug: String,
+      brand: String, 
       short_name: String,
     },
   ],
   services: [
     {
+      id: Number,
+      name: String,
+      code: String,
+      summary: String,
       link: String,
     },
   ],
 });
+
 
 StationSchema.index(
   {
@@ -64,11 +73,14 @@ StationSchema.index(
       "location.postcode": 5,
       "services.name": 8,
       "fuels.name": 6,
+
     },
     default_language: "en"
   }
 );
 
-// StationSchema.index({ "uuid": 1 }, { unique: true });
+
+StationSchema.index({ "uuid": 1 }, { unique: true });
+
 
 module.exports = mongoose.model("Station", StationSchema);
