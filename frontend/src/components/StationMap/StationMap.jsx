@@ -128,12 +128,12 @@ const StationMap = () => {
           <LoadingState />
         </div>
       )}
-      <InfoBox
+      {/* <InfoBox
         stationCount={stations.length}
         viewport={viewport}
         totalStations={allStations.length}
         enableClustering={MAP_CONFIG.ENABLE_CLUSTERING}
-      />
+      /> */}
     </div>
   );
 };
