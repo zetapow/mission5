@@ -1,0 +1,67 @@
+.menuBox{
+    display: flex;
+    flex-direction: column;
+    border-style: solid;
+    width: 40vw;
+    border-radius: 15px;
+}
+
+.buttonsBox{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 5px;
+
+}
+
+.filterAndArrowsBox {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.filterButton {
+    appearance: none;
+    background-color: transparent;
+    background-image: url('../../../assets/icons/filter.svg');
+    background-size: contain;
+    border-style: none;
+
+    padding: 0.5px;
+    width: 16px;
+    height:16px;
+    margin: 2px;   
+}
+
+.arrowsButton {
+    appearance: none;
+    background-color: transparent;
+    background-image: url('../../../assets/icons/sort.svg');
+    background-size: contain;
+    border-style: none;
+    padding: 0.5px;
+    width: 13px;
+    height:16px;
+    margin: 2px; 
+}
+
+.closeButton {
+   appearance: none;
+    background-color: rgb(211, 211, 211);
+    border-radius: 8px;
+    background-image: url('../../../assets/icons/close.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 60%;
+    border-style: none;
+    padding: 0.5px;
+    width: 16px;
+    height:16px;
+    margin: 2px;  
+    opacity: 0.5;
+    
+}
+
+.numberOfResults {
+    margin: 5px
+}

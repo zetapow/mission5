@@ -4,6 +4,7 @@ import GeoSearch from "./components/GeoSearch";
 import StationMap from "./components/StationMap/StationMap";
 import Header from "./components/shared/Header/Header";
 import Footer from "./components/shared/Footer/Footer";
+import ResultsMenu from "./components/shared/ResultsMenu/ResultsMenu";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Header className="header" />
       <main className="main">
         <StationMap className="stationMapContainer" />
+        <ResultsMenu />
       </main>
       <Footer className="footer" />
     </div>
