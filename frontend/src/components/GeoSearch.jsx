@@ -10,6 +10,7 @@ function GeoSearch() {
   const [searchText, setSearchText] = useState("");
   const [showPrice, setShowPrice] = useState(false);
   const [fuelTypeOn, setFuelTypeOn] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
 
   function toggleButton() {
     setShowPrice((prev) => !prev);
@@ -28,11 +29,16 @@ function GeoSearch() {
       const response = await fetch(`http://localhost:4000/api/stations-search/search?${params}`)
       const data = await response.json()
       console.log("Search results:", data)
+      setSearchResults(data);
+
     } catch (err) {
       console.error("Search failed:", err)
     }
+
     // TODO: trigger map or API logic here
   };
+
+  console.log("searchResults:", searchResults);
 
   return (
     <div className={styles.geoSearchContainer}>

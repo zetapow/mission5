@@ -32,14 +32,14 @@ export default function FilterDropdown({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []); // Empty dependency array means this effect runs once on mount and cleans up on unmount
+  }, []); // runs once on mount 
 
   return (
     <div className={styles.filterDropdownContainer}>
       {title && <p className={styles.dropdownTitle}>{title}</p>} {/* Optional Title */}
       <div
         className={styles.customDropdown}
-        ref={dropdownRef} // Attach ref here
+        ref={dropdownRef} 
       >
         <div className={styles.dropdownDisplay} onClick={toggleDropdown}>
           {selectedItems && selectedItems.length > 0 ? (

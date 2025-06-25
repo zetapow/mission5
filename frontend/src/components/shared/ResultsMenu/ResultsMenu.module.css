@@ -4,7 +4,11 @@
     border-style: solid;
     width: 40vw;
     border-radius: 15px;
-    z-index: 1;
+    z-index: 2000;
+    position:absolute;
+    left: 3rem;
+    top: calc(3rem + 13.1875rem + 1rem);
+    background-color: white;
 }
 
 .buttonsBox{

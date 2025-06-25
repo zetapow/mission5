@@ -14,6 +14,7 @@ function App() {
         <div className="mapContainer">
           <StationMap />
           <GeoSearch />
+          <ResultsMenu />
         </div>
       </main>
       <Footer className="footer" />

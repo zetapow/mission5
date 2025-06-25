@@ -1,4 +1,4 @@
-import React, { use } from 'react'
+import React from 'react'
 import styles from './ResultsMenu.module.css'
 import FilterMenu from './FilterMenu'
 import { useState } from 'react'
