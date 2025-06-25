@@ -6,8 +6,11 @@ import dollar from "../assets/icons/dollar.svg";
 import closePrice from "../assets/icons/close_price.svg";
 import chevron from "../assets/icons/chevron_thick.svg";
 
-function GeoSearch() {
-  const [searchText, setSearchText] = useState("");
+// props to lift-state of search results to App.jsx
+function GeoSearch({searchText, onSearchTextChange, onSearchResults, onLoading, onError}) {
+
+  
+  //searchText state now handled by App.jsx so can be passed to other components in App.jsx
   const [showPrice, setShowPrice] = useState(false);
   const [fuelTypeOn, setFuelTypeOn] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
@@ -22,6 +25,11 @@ function GeoSearch() {
 
   const handleSearch = async () => {
     console.log("Searching for:", searchText);
+
+    //potential loading and error messages to show user for search
+    if (onLoading) onLoading(true);
+    if (onError) onError(null);
+
     try {
       const params = new URLSearchParams({
         q: searchText
@@ -29,10 +37,15 @@ function GeoSearch() {
       const response = await fetch(`http://localhost:4000/api/stations-search/search?${params}`)
       const data = await response.json()
       console.log("Search results:", data)
-      setSearchResults(data);
+      
+      if (onSearchResults) onSearchResults(data);
 
     } catch (err) {
       console.error("Search failed:", err)
+      if (onError) onError(err.message || "Failed to fetch search results.");
+      if (onSearchResults) onSearchResults([]);
+    } finally {
+      if(onLoading) onLoading(false);
     }
 
     // TODO: trigger map or API logic here
@@ -47,7 +60,7 @@ function GeoSearch() {
         <form onSubmit={(e) => e.preventDefault()}>
           <SearchInput
             value={searchText}
-            onChange={setSearchText}
+            onChange={onSearchTextChange}
             onEnter={handleSearch}
           />
         </form>

@@ -3,7 +3,7 @@ import styles from './ResultsMenu.module.css'
 import FilterMenu from './FilterMenu'
 import { useState } from 'react'
 
-export default function ResultsMenu() {
+export default function ResultsMenu({resultsTotal, searchPhrase}) {
   
     const [isFilterMenuOpen, setIsFilterMenuOpen] = useState (false)
     
@@ -32,7 +32,7 @@ export default function ResultsMenu() {
         </div>
 
         <div className={styles.numberOfResults}>
-            Showing X Results
+            Showing {resultsTotal} results with "{searchPhrase}"
         </div>
 
         {isFilterMenuOpen && (
