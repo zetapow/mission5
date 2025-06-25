@@ -1,3 +1,29 @@
-.input {
-  margin-right: 0.5rem;
+.inputWrapper {
+  position: relative;
+  width: 100%;
 }
+
+.input {
+  width: 100%;
+  height: 2.4375rem;
+  padding: 0.625rem 1.5rem;
+  border-radius: 1.875rem;
+  background: #fff;
+  border: none;
+  font-size: 1rem;
+  color: black;
+  outline: none;
+  align-self: stretch;
+}
+
+.searchIcon,
+.closeIcon {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  width: 0.75rem;
+  height: 0.75rem;
+  cursor: pointer;
+}
+

@@ -1,24 +1,223 @@
 .geoSearchContainer {
-  max-width: 32rem;
-  margin: calc(var(--base-unit) * 8) auto;
-  padding: calc(var(--base-unit) * 8);
-  background: var(--white);
-  border-radius: calc(var(--base-unit) * 2);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  background: var(--gradient-main, linear-gradient(90deg, #ED560E 0%, #F57708 45.19%, #FFA000 100%));
-}
-
-.results {
-  background: var(--neutral-100);
-  padding: calc(var(--base-unit) * 4);
-  margin-top: calc(var(--base-unit) * 4);
-  border-radius: calc(var(--base-unit) * 1);
-  font-size: var(--font-size-s);
-  overflow-x: auto;
-  color: var(--neutral-900);
-}
-
-.current_location {
   display: flex;
+  width: 28.3125rem;
+  height: 13.1875rem;
+  padding: 1.875rem 3.125rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  position: absolute;
+  left: 10.4375rem;
+  top: 11.875rem;
+  border-radius: 2.5rem;
+  background: var(
+    --gradient-main,
+    linear-gradient(90deg, #ed560e 0%, #f57708 45.19%, #ffa000 100%)
+  );
 }
 
+.innerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+form {
+  width: 100%;
+}
+
+.header {
+  color: white;
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.currentLocation {
+  width: 100%;
+  display: flex;
+  gap: 2%;
+}
+
+.geolocationIcon {
+  filter: brightness(0) saturate(100%) invert(16%) sepia(18%) saturate(5025%)
+    hue-rotate(352deg) brightness(101%) contrast(100%);
+}
+
+.locationText {
+  color: #642406;
+}
+
+.showContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.showPrice {
+  display: flex;
+  width: 10.0625rem;
+  height: 2.0625rem;
+  padding: 0.25rem 0.1875rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0.625rem;
+  border-radius: 1.875rem;
+  background: linear-gradient(
+      0deg,
+      var(--Color, #fff) 0%,
+      var(--Color, #fff) 100%
+    ),
+    #e1dfff;
+  box-shadow: 0px 3px 4px 3px rgba(0, 0, 0, 0.2) inset;
+}
+
+.hidePrice {
+  display: flex;
+  width: 10.0625rem;
+  height: 2.0625rem;
+  padding: 0.25rem 0.1875rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0.625rem;
+  border-radius: 1.875rem;
+  background: linear-gradient(
+      0deg,
+      var(--Color, #fff) 0%,
+      var(--Color, #fff) 100%
+    ),
+    #e1dfff;
+  box-shadow: 0px 3px 4px 3px rgba(0, 0, 0, 0.2) inset;
+}
+
+.left {
+  display: flex;
+  height: 1.6875rem;
+  padding: 0rem 0.625rem;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  border-radius: 1.875rem;
+  border: 1px solid var(--gradient-secondary, #272270);
+  background: var(
+    --gradient-secondary,
+    linear-gradient(90deg, #272270 0%, #3931af 100%)
+  );
+  cursor: pointer;
+}
+
+.priceText,
+.closePriceText {
+  color: white;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%;
+}
+
+.dollar,
+.closePrice {
+  filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%)
+    hue-rotate(285deg) brightness(104%) contrast(102%);
+}
+
+.right {
+  display: flex;
+  justify-content: space-between;
+  width: 7.1rem;
+  height: 1.6875rem;
+  padding: 0rem 0.625rem;
+  align-items: center;
+  border-radius: 1.875rem;
+  border: 1px solid var(--gradient-secondary, #272270);
+  background: var(
+    --gradient-secondary,
+    linear-gradient(90deg, #272270 0%, #3931af 100%)
+  );
+  cursor: pointer;
+}
+
+.hideContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.fueltype {
+  display: flex;
+  width: 8rem;
+  height: 2.0625rem;
+  padding: 0.625rem 1.25rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+  border-radius: 1.25rem;
+  background: var(
+    --gradient-secondary,
+    linear-gradient(90deg, #272270 0%, #3931af 100%)
+  );
+}
+
+.fuelText {
+  color: #fff;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%;
+}
+
+.chevron {
+  width: 0.54044rem;
+  height: 0.29725rem;
+  flex-shrink: 0;
+  filter: brightness(0%) contrast(100%) invert(94%) sepia(73%) saturate(2%)
+    hue-rotate(160deg) brightness(117%) contrast(100%);
+}
+
+.fuelWrapper {
+  position: relative;
+  display: inline-block; 
+}
+
+.dropDown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  width: 129px;
+  padding: 12px 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  position: absolute;
+  border-radius: 20px;
+  background: var(--Color, #fff);
+}
+
+.dropDown > p {
+  color: black;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+}
+
+@media (max-width: 768px) {
+  .geoSearchContainer {
+    width: 100%;
+    left: 0;
+    border-radius: 0;
+    height: 16rem;
+    position: static;
+  }
+}

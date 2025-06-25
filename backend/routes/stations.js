@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-
 // import mongoose model
 const Station = require("../models/Station.js");
 
