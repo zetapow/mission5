@@ -4,10 +4,10 @@ import BottomHeader from "./BottomHeader/BottomHeader";
 
 function Header() {
   return (
-    <>
+    <header>
       <TopHeader />
       <BottomHeader />
-    </>
+    </header>
   );
 }
 

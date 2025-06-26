@@ -14,7 +14,6 @@ export const useStations = (
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch stations from API
   const fetchStations = async (requestBounds = null) => {
     try {
       setLoading(true);
@@ -42,10 +41,9 @@ export const useStations = (
       const data = await response.json();
 
       if (useViewportFiltering && requestBounds) {
-        // For viewport requests, update current stations
-        setStations(data);
+        setStations(data); // Update stations for current bounds
       } else {
-        // For initial load, save all stations
+        // on initial load, save all stations
         setAllStations(data);
         setStations(data);
       }
@@ -84,12 +82,12 @@ export const useStations = (
 
     if (useViewportFiltering) {
       if (allStations.length > 0) {
-        // Filter existing stations (faster)
+        // Filter existing stations
         const filtered = filterStationsByBounds(allStations, bounds);
         setStations(filtered);
         console.log(`Filtered to ${filtered.length} stations in viewport`);
       } else {
-        // Fetch from server (first time)
+        // Fetch from server
         fetchStations(bounds);
       }
     }
@@ -97,8 +95,8 @@ export const useStations = (
 
   return {
     stations, // Stations currently shown
-    allStations, // All stations (cached)
-    loading, // Is loading data?
-    error, // Any error message
+    allStations,
+    loading,
+    error,
   };
 };

@@ -11,7 +11,7 @@ export function useMapTiler(apiKey, containerRef, options) {
   const [mapLoaded, setMapLoaded] = useState(false);
 
   useEffect(() => {
-    // Don't create map if we don't have what we need
+    // Fail early if no container or API key
     if (!containerRef.current || !apiKey || mapRef.current) {
       return;
     }
@@ -34,7 +34,7 @@ export function useMapTiler(apiKey, containerRef, options) {
         setMapLoaded(true);
       });
 
-      // Handle any errors
+      // Handle errors
       mapRef.current.on("error", (error) => {
         console.error("Map error:", error);
       });

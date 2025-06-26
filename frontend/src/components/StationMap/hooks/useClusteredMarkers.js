@@ -1,6 +1,6 @@
 import { useRef, useCallback, useEffect } from "react";
-import { createClusterMarker, createStationPopup } from "../util/clusterUtils";
-// import { error } from "node:console";
+/** utility to cluster markers */
+import { createClusterMarker, createStationPopup } from "../util/clusterUtils"; //
 
 export const useClusteredMarkers = (
   map,

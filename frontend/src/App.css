@@ -2,10 +2,14 @@
 
 .App {
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto minmax(70vh, 1fr) auto;
 
   min-height: 100vh;
+<<<<<<< HEAD
   max-height: 100vh; 
+=======
+  max-height: 100vh; /* Prevents scrolling on desktop */
+>>>>>>> main
   grid-template-areas:
     "header"
     "main"
@@ -22,8 +26,15 @@
   min-height: 0;
   padding: 0;
   display: flex;
-  flex-direction: column;
-  overflow: hidden;
+}
+
+/* Container to hold map and search overlay */
+.mapContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  min-height: 400px;
 }
 
 /* Container to hold map and search overlay */
@@ -45,12 +56,13 @@
 
 .footer {
   grid-area: footer;
+  flex-shrink: 0;
 }
 
 /* Mobile responsive */
 @media (max-width: 768px) {
   .App {
-    max-height: none; /* mobile to expand */
+    max-height: none;
     overflow: visible; /* mobile scrolling */
   }
 

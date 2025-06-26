@@ -13,7 +13,6 @@
   font-size: 1rem;
   color: black;
   outline: none;
-  align-self: stretch;
 }
 
 .searchIcon,
@@ -22,8 +21,6 @@
   top: 50%;
   right: 1rem;
   transform: translateY(-50%);
-  width: 0.75rem;
-  height: 0.75rem;
   cursor: pointer;
 }
 

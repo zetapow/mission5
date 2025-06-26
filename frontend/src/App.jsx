@@ -9,8 +9,7 @@ import { useState, useEffect, useMemo } from "react";
 import { LoadingState } from "./components/StationMap/LoadingState";
 
 function App() {
-
-  // "lifted-states" from Geosearch so that they can be used in StationMap and ResultsMenu"
+  // "lifted-states from Geosearch so that they can be used in StationMap and ResultsMenu"
   // loading and error to show messages to user if needed
   const [searchResults, setSearchResults] = useState([]); //raw results from API
   const [isLoading, setIsLoading] = useState(false);
@@ -67,7 +66,7 @@ function App() {
       setSelectedStationId(null);
     }   
   };
-  
+
   const handleError = (errorMessage) => {
     setError(errorMessage);
     setIsLoading(false);
@@ -175,17 +174,21 @@ function App() {
 
       <main className="main">
         <div className="mapContainer">
-          
-          <StationMap />
-          
+          <StationMap
+            searchResults={searchResults}
+            isLoading={isLoading}
+            error={error}
+          />
+
           <GeoSearch
             searchText={searchText}
             onSearchTextChange={handleSearchTextChange}
             onSearchResults={handleSearchResultsUpdate}
             onLoading={handleLoading}
             onError={handleError}
+          />
 
-            />
+            
           
           {/* Conditional Rendering for after search/loading/error */}
           {shouldShowResultsMenu && (

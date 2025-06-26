@@ -5,11 +5,16 @@ import geolocation from "../assets/icons/geolocation.svg";
 import dollar from "../assets/icons/dollar.svg";
 import closePrice from "../assets/icons/close_price.svg";
 import chevron from "../assets/icons/chevron_thick.svg";
+import SearchSuggestions from "./SearchSuggestions";
 
 // props to lift-state of search results to App.jsx
-function GeoSearch({searchText, onSearchTextChange, onSearchResults, onLoading, onError}) {
-
-  
+function GeoSearch({
+  searchText,
+  onSearchTextChange,
+  onSearchResults,
+  onLoading,
+  onError,
+}) {
   //searchText state now handled by App.jsx so can be passed to other components in App.jsx
   const [showPrice, setShowPrice] = useState(false);
   const [fuelTypeOn, setFuelTypeOn] = useState(false);
@@ -23,33 +28,48 @@ function GeoSearch({searchText, onSearchTextChange, onSearchResults, onLoading, 
     setFuelTypeOn((prev) => !prev);
   }
 
-  const handleSearch = async () => {
-    console.log("Searching for:", searchText);
-
+  const fetchSearchResults = async (input) => {
+    console.log("Searching for:", input);
+    if (!input.trim()) {
+      setSearchResults([]);
+      if (onSearchResults) onSearchResults([]);
+      return;
+    }
     //potential loading and error messages to show user for search
     if (onLoading) onLoading(true);
     if (onError) onError(null);
-
+    if (input.toLowerCase().includes("car wash")){
+      input = input.replace(/car\s+wash/gi, "carwash")
+    }
+    
     try {
       const params = new URLSearchParams({
-        q: searchText
+        q: input,
       });
-      const response = await fetch(`http://localhost:4000/api/stations-search/search?${params}`)
-      const data = await response.json()
-      console.log("Search results:", data)
-      
+      const response = await fetch(
+        `http://localhost:4000/api/stations-search/search?${params}`
+      );
+      const data = await response.json();
+      setSearchResults(data);
       if (onSearchResults) onSearchResults(data);
-
     } catch (err) {
-      console.error("Search failed:", err)
+      console.error("Search failed:", err);
       if (onError) onError(err.message || "Failed to fetch search results.");
+      setSearchResults([]);
       if (onSearchResults) onSearchResults([]);
     } finally {
-      if(onLoading) onLoading(false);
+      if (onLoading) onLoading(false);
     }
-
-    // TODO: trigger map or API logic here
   };
+
+  const handleSearchInputChange = (value) => {
+    onSearchTextChange(value)
+    fetchSearchResults(value)
+  }
+
+  const handleSearch = () => {
+    fetchSearchResults(searchText)
+  }
 
   console.log("searchResults:", searchResults);
 
@@ -57,13 +77,23 @@ function GeoSearch({searchText, onSearchTextChange, onSearchResults, onLoading, 
     <div className={styles.geoSearchContainer}>
       <div className={styles.innerContainer}>
         <p className={styles.header}>Search Z stations</p>
-        <form onSubmit={(e) => e.preventDefault()}>
+        <div className={styles.searchWrapper}>
           <SearchInput
             value={searchText}
-            onChange={onSearchTextChange}
+            onChange={handleSearchInputChange}
             onEnter={handleSearch}
           />
-        </form>
+          <SearchSuggestions
+            searchText={searchText}
+            searchResults={searchResults}
+            onSelect={(item) => {
+              console.log("User selected:", item, searchText);
+              onSearchTextChange(item.label);
+              fetchSearchResults(item.label);
+            }}
+          />
+        </div>
+
         <div className={styles.currentLocation}>
           <img
             className={styles.geolocationIcon}

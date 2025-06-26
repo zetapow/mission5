@@ -22,7 +22,7 @@ export async function fetchStations(apiUrl, options = {}) {
       Accept: "application/json",
       "Cache-Control": "max-age=300", // Cache for 5 minutes
     },
-    ...fetchOptions, // Allow passing signal for abort controller
+    ...fetchOptions, // Spread additional fetch options
   });
 
   if (!response.ok) {
