@@ -11,8 +11,6 @@
   align-items: center;
   gap: 1rem;
   position: absolute;
-  /* left: 10.4375rem;
-  top: 11.875rem; */
   left: 3rem;
   top: 3rem;
   border-radius: 2.5rem;
@@ -219,9 +217,14 @@ form {
   line-height: 150%;
 }
 
+.searchWrapper {
+  position: relative;
+  width: 100%;
+}
+
 @media (max-width: 768px) {
   .geoSearchContainer {
-    width: calc(100% - 1rem);
+    width: 100%;
     left: 0;
     border-radius: 0;
     top: 0;

@@ -1,0 +1,27 @@
+.dropDown {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow-y: auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  z-index: 999;
+  width: 100%;
+}
+
+.dropDownItem {
+  padding: 10px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.dropDownItem:hover {
+  background-color: #f7f7f7;
+}
+
+.icon {
+  font-size: 18px;
+}
