@@ -4,20 +4,21 @@ import "@maptiler/sdk/dist/maptiler-sdk.css";
 import markerServiceIcon from "../../assets/marker-service.png";
 import styles from "./StationMap.module.css";
 
-// Custom hooks
-import { useMapTiler } from "../../hooks/useMapTiler";
-import { useStations } from "../../hooks/useStations";
-import { useMarkers } from "../../hooks/useMarkers";
-import { useViewport } from "../../hooks/useViewport";
-import { useClustering } from "../../hooks/useClustering";
-import { useClusteredMarkers } from "../../hooks/useClusteredMarkers";
+// Constants that can be configured globally
+import { MAP_CONFIG } from "../../constants/mapConstants";
 
-// UI Components
+/**  Custom hooks **/
+import { useViewport } from "./hooks/useViewport"; // manage map viewport and bounds
+import { useMapConfig } from "./hooks/useMapConfig"; // run once to set Global MapTiler API key
+import { useMapTiler } from "./hooks/useMapTiler"; // create map instance
+import { useStations } from "./hooks/useStations"; // fetch stations data
+import { useClustering } from "./hooks/useClustering"; // group nearby stations
+import { useClusteredMarkers } from "./hooks/useClusteredMarkers"; // manage clustered markers
+import { useMarkers } from "./hooks/useMarkers"; // display individual station markers when clusters are disabled
+
+// UI imports
 import { LoadingState } from "./LoadingState";
 import { ErrorState } from "./ErrorState";
-
-// Constants
-import { MAP_CONFIG } from "../../constants/mapConstants";
 
 const API_URL = `${MAP_CONFIG.API_BASE_URL}/stations`;
 
@@ -28,7 +29,7 @@ const StationMap = ({
 }) => {
   const apiKey = import.meta.env.VITE_MAPTILER_API;
 
-  // Early return before hooks are called
+  // Early return before hooks
   if (!apiKey) {
     return (
       <div className={styles.apiKeyError}>
@@ -41,11 +42,7 @@ const StationMap = ({
   const mapContainer = useRef(null);
 
   // Preload API key to avoid delays
-  useEffect(() => {
-    if (apiKey) {
-      maptilersdk.config.apiKey = apiKey;
-    }
-  }, [apiKey]);
+  useMapConfig(apiKey);
 
   // Optimized map options with performance settings
   const mapOptions = useMemo(
@@ -80,9 +77,9 @@ const StationMap = ({
   // Use search results when available, otherwise use all stations
   const displayStations = searchResults.length > 0 ? searchResults : stations;
 
-  // Jump to search results when they change
+  // Jump to search results
   useEffect(() => {
-    // Only run if we have a map, it's loaded, and we have search results
+    // Only run map exists, loaded and have search results
     if (map && mapLoaded && searchResults.length > 0) {
       // Get coordinates from all search results
       const coordinates = searchResults
@@ -125,28 +122,26 @@ const StationMap = ({
     mapLoaded
   );
 
-  // Use clustering or individual markers based on configuration
-  if (MAP_CONFIG.ENABLE_CLUSTERING) {
-    useClusteredMarkers(
-      map,
-      mapLoaded,
-      clusters,
-      maptilersdk,
-      getClusterExpansionZoom
-    );
-  } else {
-    useMarkers(
-      map,
-      mapLoaded,
-      displayStations,
-      styles,
-      markerServiceIcon,
-      maptilersdk
-    );
-  }
+  useClusteredMarkers(
+    map,
+    mapLoaded,
+    MAP_CONFIG.ENABLE_CLUSTERING ? clusters : [],
+    maptilersdk,
+    getClusterExpansionZoom
+  );
 
-  // Early returns for different states
-  if (error) return <ErrorState error={error} />;
+  useMarkers(
+    map,
+    mapLoaded,
+    MAP_CONFIG.ENABLE_CLUSTERING ? [] : displayStations,
+    styles,
+    markerServiceIcon,
+    maptilersdk
+  );
+
+  // all error states
+  const hasError = error || searchError;
+  if (hasError) return <ErrorState error={hasError} />;
 
   return (
     <div className={styles.mapWrapper}>

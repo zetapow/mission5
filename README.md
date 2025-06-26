@@ -10,7 +10,6 @@ A web app for customers.
 mission5
 ├── backend/    # Node.js/ Express/ MongoDB API server
 ├── frontend/   # React app (UI, components, assets)
-├── shared/     # Utilities, constants
 ├── .env.example
 ├── .gitignore
 └── README.md
@@ -69,11 +68,11 @@ The backend API will typically run at [http://localhost:4000](http://localhost:4
 
 ### Design
 
--  [@Kere M.](mailto:Kerem@missionreadyhq.com)
--  [@Jennifer V.](mailto:Jennifervu@missionreadyhq.com)
+- [@Kere M.](mailto:Kerem@missionreadyhq.com)
+- [@Jennifer V.](mailto:Jennifervu@missionreadyhq.com)
 
 ### Development
 
--  [@Eugene L.](https://github.com/Eule034430)
--  [@Adam T.](https://github.com/AdamT-HJ)
--  [@Peter Z.](https://github.com/zetapow)
+- [@Eugene L.](https://github.com/Eule034430)
+- [@Adam T.](https://github.com/AdamT-HJ)
+- [@Peter Z.](https://github.com/zetapow)

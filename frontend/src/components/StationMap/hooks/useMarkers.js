@@ -1,4 +1,5 @@
 import { useRef, useEffect } from "react";
+/** create individual station markers */
 import { createStationMarker } from "../util/mapMarkerUtils";
 
 /**

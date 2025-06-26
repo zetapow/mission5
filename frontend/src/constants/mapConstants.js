@@ -6,8 +6,8 @@
 
 export const MAP_CONFIG = {
   // Map Initial Position
-  // DEFAULT_CENTER: [174.7645, -36.8485], // Auckland, NZ coordinates [longitude, latitude]
-  DEFAULT_CENTER: [175.2528, -37.7826], // Hamilton, NZ coordinates [longitude, latitude]
+  DEFAULT_CENTER: [174.7645, -36.8485], // Auckland, NZ coordinates [longitude, latitude]
+  // DEFAULT_CENTER: [175.2528, -37.7826], // Hamilton, NZ coordinates [longitude, latitude]
 
   // Initial zoom level when map loads
   DEFAULT_ZOOM: 10,
@@ -27,7 +27,7 @@ export const MAP_CONFIG = {
 
   // Clustering settings - UX group nearby stations together
   ENABLE_CLUSTERING: true, // Turn marker clustering on/off
-  CLUSTER_RADIUS: 40, // Distance in pixels within which stations get grouped into clusters
+  CLUSTER_RADIUS: 50, // Distance in pixels within which stations get grouped into clusters
   CLUSTER_MAX_ZOOM: 16, // Stop clustering at this zoom level (users can see individual stations)
   CLUSTER_MIN_POINTS: 3, // Minimum number of stations required to form a cluster
 };

@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const StationSchema = new mongoose.Schema({
-  // uuid: { type: String, required: true, unique: true },
   last_edited: String,
   name: String,
   type: String,
@@ -72,7 +71,6 @@ const StationSchema = new mongoose.Schema({
   ],
 });
 
-// Fixed text index - removed duplicates
 StationSchema.index(
   {
     name: "text",
