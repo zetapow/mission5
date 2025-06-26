@@ -12,9 +12,9 @@ export const useViewport = (map, mapLoaded, debounceMs = 300) => {
   const getCurrentMapInfo = useCallback(() => {
     if (!map || !mapLoaded) return null;
 
-    const center = map.getCenter();
-    const zoom = map.getZoom();
-    const mapBounds = map.getBounds();
+    const center = map.getCenter(); // Get current center coordinates
+    const zoom = map.getZoom(); // Get current zoom level
+    const mapBounds = map.getBounds(); /// Get current map bounds
 
     return {
       viewport: {
@@ -34,17 +34,16 @@ export const useViewport = (map, mapLoaded, debounceMs = 300) => {
   const updateViewport = useCallback(() => {
     const mapInfo = getCurrentMapInfo();
     if (mapInfo) {
-      setViewport(mapInfo.viewport);
-      setBounds(mapInfo.bounds);
+      setViewport(mapInfo.viewport); // Update viewport state
+      setBounds(mapInfo.bounds); // Update bounds state
       console.log("Map viewport updated:", mapInfo.viewport);
     }
   }, [getCurrentMapInfo]);
 
-  // Set up map event listeners
   useEffect(() => {
     if (!map || !mapLoaded) return;
 
-    // Update viewport immediately when map loads
+    // Update viewport when map loads
     updateViewport();
 
     // Listen for map changes

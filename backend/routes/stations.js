@@ -27,8 +27,8 @@ router.get("/", async (req, res) => {
       }
       console.log(`Fetching stations within bounds:`, bounds);
 
-      // Query stations within the bounding box
-      // Now using direct numeric comparison since coordinates are stored as numbers
+      // Query stations within the box
+      // direct numeric comparison. coordinates are stored as numbers
       const stations = await Station.find(
         {
           "location.latitude": { $gte: bounds.south, $lte: bounds.north },

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Supercluster from "supercluster";
+import { MAP_CONFIG } from "/src/constants/mapConstants";
 
 /**
  * Custom hook to cluster nearby stations together
@@ -39,9 +40,9 @@ export const useClustering = (stations, map, mapLoaded) => {
 
     // Create clustering engine
     superclusterRef.current = new Supercluster({
-      radius: 40, // Cluster radius in pixels
-      maxZoom: 16, // Stop clustering at this zoom level
-      minPoints: 2, // Minimum stations needed to form a cluster
+      radius: MAP_CONFIG.CLUSTER_RADIUS, // Cluster radius in pixels
+      maxZoom: MAP_CONFIG.CLUSTER_MAX_ZOOM, // Stop clustering at this zoom level
+      minPoints: MAP_CONFIG.CLUSTER_MIN_POINTS, // Minimum stations needed to form a cluster
     });
 
     // Load stations into clustering engine

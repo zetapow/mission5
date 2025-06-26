@@ -12,7 +12,7 @@ const CLUSTER_CONFIG = {
   COLORS: {
     SMALL: "rgba(255, 160, 0, 0.9)", // Base accent color with transparency
     MEDIUM: "rgba(230, 144, 13, 0.95)", // Darker shade with less transparency
-    LARGE: "rgba(204, 128, 0, 1)", // Darkest shade, fully opaque
+    LARGE: "rgba(204, 128, 0, 1)", // Darkest shade for many stations
   },
   FONT_SIZES: {
     SMALL: "12px",
