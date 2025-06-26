@@ -71,8 +71,7 @@ const SearchSuggestions = ({ searchText, searchResults, onSelect }) => {
     });
 
     setSuggestions(filtered);
-  }, [searchText, searchResults]);
-
+  }, [searchText]);
   if (!suggestions.length) return null;
 
   return (
@@ -81,7 +80,10 @@ const SearchSuggestions = ({ searchText, searchResults, onSelect }) => {
         <div
           key={item.label}
           className={styles.dropDownItem}
-          onClick={() => onSelect(item)}
+          onClick={() => {
+            onSelect(item);
+            setSuggestions([]);
+          }}
         >
           {item.label}
           <img

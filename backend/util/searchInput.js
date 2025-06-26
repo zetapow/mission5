@@ -28,7 +28,7 @@ async function searchStationsByKeywords(searchInput) {
         projection: { score: { $meta: "textScore" } },
       })
       .sort({ score: { $meta: "textScore" } })
-      .limit(10);
+      .limit(50);
 
     stations = await cursor.toArray(); // convert cursor into js array
 
