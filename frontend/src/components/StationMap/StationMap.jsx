@@ -15,21 +15,20 @@ import { useClusteredMarkers } from "../../hooks/useClusteredMarkers";
 // UI Components
 import { LoadingState } from "./LoadingState";
 import { ErrorState } from "./ErrorState";
-import { InfoBox } from "./InfoBox";
 
 // Constants
 import { MAP_CONFIG } from "../../constants/mapConstants";
 
 const API_URL = `${MAP_CONFIG.API_BASE_URL}/stations`;
 
-const StationMap = () => {
+const StationMap = ({
+  searchResults = [],
+  isLoading: searchLoading,
+  error: searchError,
+}) => {
   const apiKey = import.meta.env.VITE_MAPTILER_API;
-  const mapContainer = useRef(null);
 
-  // Debug logging
-  console.log("StationMap render - API Key:", apiKey ? "Present" : "Missing");
-
-  // Early return if no API key
+  // Early return before hooks are called
   if (!apiKey) {
     return (
       <div className={styles.apiKeyError}>
@@ -39,13 +38,12 @@ const StationMap = () => {
     );
   }
 
+  const mapContainer = useRef(null);
+
   // Preload API key to avoid delays
   useEffect(() => {
     if (apiKey) {
       maptilersdk.config.apiKey = apiKey;
-      console.log("API key set globally");
-    } else {
-      console.error("No API key found!");
     }
   }, [apiKey]);
 
@@ -79,13 +77,56 @@ const StationMap = () => {
     MAP_CONFIG.ENABLE_VIEWPORT_FILTERING
   );
 
-  // Choose between clustering or individual markers
+  // Use search results when available, otherwise use all stations
+  const displayStations = searchResults.length > 0 ? searchResults : stations;
+
+  // Jump to search results when they change
+  useEffect(() => {
+    // Only run if we have a map, it's loaded, and we have search results
+    if (map && mapLoaded && searchResults.length > 0) {
+      // Get coordinates from all search results
+      const coordinates = searchResults
+        .filter(
+          (station) => station.location?.latitude && station.location?.longitude
+        )
+        .map((station) => [
+          station.location.longitude,
+          station.location.latitude,
+        ]);
+
+      if (coordinates.length > 0) {
+        if (coordinates.length === 1) {
+          // Single result: Center on that station
+          map.flyTo({
+            center: coordinates[0],
+            zoom: 14,
+            duration: 1000,
+          });
+        } else {
+          // Multiple results: Fit bounds to show all stations
+          const bounds = coordinates.reduce((bounds, coord) => {
+            return bounds.extend(coord);
+          }, new maptilersdk.LngLatBounds(coordinates[0], coordinates[0]));
+
+          map.fitBounds(bounds, {
+            padding: 50,
+            duration: 1000,
+            maxZoom: 15,
+          });
+        }
+      }
+    }
+  }, [map, mapLoaded, searchResults]);
+
+  // Call all hooks, conditionally use results
+  const { clusters, getClusterExpansionZoom } = useClustering(
+    displayStations,
+    map,
+    mapLoaded
+  );
+
+  // Use clustering or individual markers based on configuration
   if (MAP_CONFIG.ENABLE_CLUSTERING) {
-    const { clusters, getClusterExpansionZoom } = useClustering(
-      stations,
-      map,
-      mapLoaded
-    );
     useClusteredMarkers(
       map,
       mapLoaded,
@@ -97,21 +138,12 @@ const StationMap = () => {
     useMarkers(
       map,
       mapLoaded,
-      stations,
+      displayStations,
       styles,
       markerServiceIcon,
       maptilersdk
     );
   }
-
-  // Debug logging for hooks
-  console.log("Hook states:", {
-    map: !!map,
-    mapLoaded,
-    stationsCount: stations.length,
-    loading,
-    error: !!error,
-  });
 
   // Early returns for different states
   if (error) return <ErrorState error={error} />;
@@ -128,12 +160,6 @@ const StationMap = () => {
           <LoadingState />
         </div>
       )}
-      {/* <InfoBox
-        stationCount={stations.length}
-        viewport={viewport}
-        totalStations={allStations.length}
-        enableClustering={MAP_CONFIG.ENABLE_CLUSTERING}
-      /> */}
     </div>
   );
 };

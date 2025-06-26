@@ -5,6 +5,7 @@
   height: 50rem;
   border: 1px solid var(--neutral-100);
   position: relative;
+  z-index: 0;
 }
 
 @media (max-width: 768px) {
