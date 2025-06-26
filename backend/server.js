@@ -1,5 +1,5 @@
 // Entry point for backend
-require("dotenv").config({ path: "../.env" });
+require("dotenv").config({ path: "/.env" });
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
@@ -28,7 +28,6 @@ mongoose.connect(MONGODB_CONNECTION).then(() => {
 // Routes
 app.use("/api/maptiler", maptilerRoutes);
 app.use("/api/stations", stations);
-
 app.use("/api/stations-search", stationSearch);
 
 // server start

@@ -15,6 +15,7 @@
     --gradient-main,
     linear-gradient(90deg, #ed560e 0%, #f57708 45.19%, #ffa000 100%)
   );
+  z-index: 999;
 }
 
 .innerContainer {
@@ -202,6 +203,7 @@ form {
   position: absolute;
   border-radius: 20px;
   background: var(--Color, #fff);
+  z-index: 1000;
 }
 
 .dropDown > p {
