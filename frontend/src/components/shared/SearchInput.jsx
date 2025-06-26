@@ -26,11 +26,7 @@ export default function SearchInput({ value, onChange, onEnter }) {
           onClick={() => onChange("")}
         />
       ) : (
-        <img
-          src={search}
-          alt="search"
-          className={styles.searchIcon}
-        />
+        <img src={search} alt="search" className={styles.searchIcon} />
       )}
     </div>
   );
