@@ -1,23 +1,108 @@
 // FilterMenu.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './FilterMenu.module.css';
 import FilterDropdown from './FilterDropDown.jsx';
 
-export default function FilterMenu() {
-  // states to be populated by search results.
-  // For now, they are initialized as empty arrays.
-  const [serviceOptions, setServiceOptions] = useState(["car wash", "trailer hire"]);
+export default function FilterMenu({
+  onClose,
+  // currently 'displayed' results, used to generate dropdown options
+  results,
+  onApplyFilters,
+  currentSelectedServices = [],
+  currentSelectedStationTypes = [],
+  currentSelectedFuelTypes = []
+
+ }) {
+
+  // states to be populated by search results. (options for dropdowns)
+  const [serviceOptions, setServiceOptions] = useState([]);
   const [fuelOptions, setFuelOptions] = useState([]);
   const [stationTypeOptions, setStationTypeOptions] = useState([]);
 
-  // States for selected items 
-  const [selectedServices, setSelectedServices] = useState([]);
-  const [selectedStationTypes, setSelectedStationTypes] = useState([]);
-  const [selectedFuelTypes, setSelectedFuelTypes] = useState([]);
+  // States for selected items (internal to FilterMenu, temporary until 'Apply' is clicked)
+  // Initialize from the props, so previously applied filters are shown if menu re-opens
+  const [selectedServices, setSelectedServices] = useState(currentSelectedServices);
+  const [selectedStationTypes, setSelectedStationTypes] = useState(currentSelectedStationTypes);
+  const [selectedFuelTypes, setSelectedFuelTypes] = useState(currentSelectedFuelTypes);
 
 
-  // next usestate to hold ALL selections by user, update on click of 'APPLY' button, use contents of selectedServices above.
   
+  
+
+  // Helper function to extract unique service names
+    const extractUniqueServiceNames = (stations) => {
+        const uniqueServices = new Set(); // Use a Set to automatically handle uniqueness
+
+        if (stations && Array.isArray(stations)) {
+            stations.forEach(station => {
+                // Check if station.services exists and is an array
+                if (station.services && Array.isArray(station.services)) {
+                    station.services.forEach(service => {
+                        if (service.name) {
+                            uniqueServices.add(service.name);
+                        }
+                    });
+                }
+            });
+        }
+        return Array.from(uniqueServices); // Convert Set back to an Array
+    };
+
+
+
+    // Helper function to extract unique station types
+    const extractUniqueStationTypes = (stations) => {
+        const uniqueTypes = new Set();
+        if (stations && Array.isArray(stations)) {
+            stations.forEach(station => {
+                if (station.type) { // station.type is a direct string
+                    uniqueTypes.add(station.type);
+                }
+            });
+        }
+        return Array.from(uniqueTypes);
+    };
+
+    // Helper function to extract unique fuel names
+    const extractUniqueFuelNames = (stations) => {
+        const uniqueFuels = new Set();
+        if (stations && Array.isArray(stations)) {
+            stations.forEach(station => {
+                if (station.fuels && Array.isArray(station.fuels)) {
+                    station.fuels.forEach(fuel => {
+                        if (fuel.name) {
+                            uniqueFuels.add(fuel.name);
+                        }
+                    });
+                }
+            });
+        }
+        return Array.from(uniqueFuels);
+    };
+
+
+    // useEffect hook to run the extraction when 'results' change
+    useEffect(() => {
+        const extractedServices = extractUniqueServiceNames(results);
+        setServiceOptions(extractedServices);
+
+        const extractedStationTypes = extractUniqueStationTypes(results);
+        setStationTypeOptions(extractedStationTypes); // Update stationTypeOptions
+
+        const extractedFuelNames = extractUniqueFuelNames(results);
+        setFuelOptions(extractedFuelNames); // Update fuelOptions
+
+    }, [results]); // Dependency array: rerun when 'results' prop changes
+
+
+    // Reset selected states when current selected props change
+    // handles where filters are applied, menu closes, then a 'new search' is done,
+    // and the filter menu re-opens. So previously applied filters match the new context.
+    useEffect(() => {
+        setSelectedServices(currentSelectedServices);
+        setSelectedStationTypes(currentSelectedStationTypes);
+        setSelectedFuelTypes(currentSelectedFuelTypes);
+    }, [currentSelectedServices, currentSelectedStationTypes, currentSelectedFuelTypes]);
 
   // Callback functions for the FilterDropdown components
   const handleServiceItemSelect = (option) => {
@@ -68,6 +153,25 @@ export default function FilterMenu() {
     );
   };
 
+  // --- Handle Cancel button click ---
+    const handleCancel = () => {
+        // Revert to previously applied filters (passed as props)
+        setSelectedServices(currentSelectedServices);
+        setSelectedStationTypes(currentSelectedStationTypes);
+        setSelectedFuelTypes(currentSelectedFuelTypes);
+        onClose(); // Close the filter menu
+    };
+
+    // --- Handle Apply button click ---
+    const handleApply = () => {
+        const filtersToApply = {
+            services: selectedServices,
+            stationTypes: selectedStationTypes,
+            fuelTypes: selectedFuelTypes
+        };
+        onApplyFilters(filtersToApply); // Pass the filters up to ResultsMenu, then App.jsx
+        onClose(); // Close the filter menu
+    };
 
   return (
     <main className={styles.filterMenuBox}>
@@ -111,6 +215,11 @@ export default function FilterMenu() {
         onItemSelect={handleFuelTypeItemSelect}
         onItemRemove={handleFuelTypeItemRemove}
       />
+
+      <div className={styles.filterActions}>
+        <button className={styles.cancelButton} onClick={handleCancel}>Cancel</button>
+        <button className={styles.applyButton} onClick={handleApply}>Apply</button>
+      </div>
 
     </main>
   );

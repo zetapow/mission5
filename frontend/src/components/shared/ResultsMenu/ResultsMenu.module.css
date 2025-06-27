@@ -9,6 +9,10 @@
     left: 3rem;
     top: calc(3rem + 13.1875rem + 1rem);
     background-color: white;
+    max-height: 50rem;
+    overflow-y: auto; /* Enables vertical scrollbar when content overflows */
+    overflow-x: hidden; /* Hides horizontal scrollbar if not needed */
+    padding-bottom: 10px;
 }
 
 .buttonsBox{
