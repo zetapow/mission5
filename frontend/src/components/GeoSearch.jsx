@@ -38,7 +38,10 @@ function GeoSearch({
     //potential loading and error messages to show user for search
     if (onLoading) onLoading(true);
     if (onError) onError(null);
-
+    if (input.toLowerCase().includes("car wash")){
+      input = input.replace(/car\s+wash/gi, "carwash")
+    }
+    
     try {
       const params = new URLSearchParams({
         q: input,
@@ -47,7 +50,6 @@ function GeoSearch({
         `http://localhost:4000/api/stations-search/search?${params}`
       );
       const data = await response.json();
-      console.log("Search results:", data);
       setSearchResults(data);
       if (onSearchResults) onSearchResults(data);
     } catch (err) {
