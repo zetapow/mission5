@@ -39,15 +39,17 @@ function App() {
   return (
     <div className="App">
       <Header className="header" />
-      <main className="main">
+      <main className="main" role="main" aria-label="Z Service Station finder">
         <div className="mapContainer">
           <StationMap
+            aria-label="Map showing Z service stations"
             searchResults={searchResults}
             isLoading={isLoading}
             error={error}
           />
 
           <GeoSearch
+            role="search"
             searchText={searchText}
             onSearchTextChange={handleSearchTextChange}
             onSearchResults={handleSearchResultsUpdate}
