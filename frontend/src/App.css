@@ -5,11 +5,7 @@
   grid-template-rows: auto minmax(70vh, 1fr) auto;
 
   min-height: 100vh;
-<<<<<<< HEAD
-  max-height: 100vh; 
-=======
   max-height: 100vh; /* Prevents scrolling on desktop */
->>>>>>> main
   grid-template-areas:
     "header"
     "main"

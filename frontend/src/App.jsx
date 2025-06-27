@@ -55,15 +55,17 @@ function App() {
     setError(null);
     setSearchAttempted(true);
     setSelectedStationId(null)
+    setSelectedFilters({services:[], stationTypes:[], fuelTypes:[]});
   };
 
-  //NOTE: not the same as LoadingState (cap. I)
+  //NOTE: 'loadingState' not the same as 'LoadingState' (cap. I)
   const handleLoading = (loadingState) => {
     setIsLoading(loadingState);
     // if loading, means search attempted
     if(loadingState){
       setSearchAttempted(true);
       setSelectedStationId(null);
+      setSelectedFilters({services:[], stationTypes:[], fuelTypes:[]});
     }   
   };
 
@@ -73,6 +75,7 @@ function App() {
     // if error, means search attempted
     setSearchAttempted(true);
     setSelectedStationId(null);
+    setSelectedFilters({services:[], stationTypes:[], fuelTypes:[]});
   };
 
   const handleSearchTextChange = (text) => {
