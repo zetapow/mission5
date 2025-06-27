@@ -1,7 +1,6 @@
-// FilterDropdown.js
 import React, { useState, useEffect, useRef } from 'react';
-import styles from './FilterDropdown.module.css'; // Renamed CSS module
-import DownArrowIcon from '../../../assets/icons/chevron_light.svg'; // Assuming these SVGs are accessible
+import styles from './FilterDropdown.module.css'; 
+import DownArrowIcon from '../../../assets/icons/chevron_light.svg'; 
 import CloseIcon from '../../../assets/icons/close.svg';
 
 export default function FilterDropdown({
@@ -10,7 +9,7 @@ export default function FilterDropdown({
   selectedItems,   // The array of currently selected items (managed by parent)
   onItemSelect,    // Callback function when an item is clicked in the dropdown
   onItemRemove,    // Callback function when an item's close button is clicked
-  title            // Optional: for the heading above the dropdown (e.g., "Station Type")
+  title            // for the heading above the dropdown (e.g., "Station Type")
 }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -32,14 +31,14 @@ export default function FilterDropdown({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []); // runs once on mount 
+  }, []); 
 
   return (
     <div className={styles.filterDropdownContainer}>
       {title && <p className={styles.dropdownTitle}>{title}</p>} {/* Optional Title */}
       <div
         className={styles.customDropdown}
-        ref={dropdownRef} 
+        ref={dropdownRef} // Attach ref here
       >
         <div className={styles.dropdownDisplay} onClick={toggleDropdown}>
           {selectedItems && selectedItems.length > 0 ? (
