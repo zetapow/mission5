@@ -18,8 +18,8 @@ mission5
     ├── public/          
     └── src/            # React source code
         ├── assets/     # Dynamic assets (images, icons, media)
-        └── components/ 
-            └── shared/ # Header, footer and results menu
+        ├── components/ 
+        |   └── shared/ # Header, footer and results menu
         ├── constants/  # Map configuration values
         └── styles/     # CSS files (variables, fonts)
 ├── .env.example        
