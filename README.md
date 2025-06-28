@@ -8,11 +8,24 @@ A web app for customers.
 
 ```
 mission5
-├── backend/    # Node.js/ Express/ MongoDB API server
-├── frontend/   # React app (UI, components, assets)
-├── .env.example
-├── .gitignore
+├── backend/            # Server-side Node.js app
+│   ├── data/           # Static data files (JSON datasets)
+│   ├── middleware/     
+│   ├── models/         # Database models/schemas (MongoDB/Mongoose)
+│   ├── routes/         # API endpoints
+│   └── util/           # Utility functions (search, seeding)
+└── frontend/           # Client-side React app
+    ├── public/         # favicon 
+    └── src/            # React source code
+        ├── assets/     # Dynamic assets (images, icons, media)
+        └── components/ # Search box, map components
+            └── shared/ # Header, footer and results menu
+        ├── constants/  # Map configuration values
+        └── styles/     # CSS files (variables, fonts)
+├── .env.example        # sample environment variables to get started
 └── README.md
+
+
 
 ```
 
