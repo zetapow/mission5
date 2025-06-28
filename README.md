@@ -13,16 +13,16 @@ mission5
 │   ├── middleware/     
 │   ├── models/         # Database models/schemas (MongoDB/Mongoose)
 │   ├── routes/         # API endpoints
-│   └── util/           # Utility functions (search, seeding)
+│   └── util/           
 └── frontend/           # Client-side React app
-    ├── public/         # favicon 
+    ├── public/          
     └── src/            # React source code
         ├── assets/     # Dynamic assets (images, icons, media)
-        └── components/ # Search box, map components
+        └── components/ 
             └── shared/ # Header, footer and results menu
         ├── constants/  # Map configuration values
         └── styles/     # CSS files (variables, fonts)
-├── .env.example        # sample environment variables to get started
+├── .env.example        
 └── README.md
 
 
