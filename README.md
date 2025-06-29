@@ -1,9 +1,17 @@
 # Z Energy
 
-This web app provides a solution to help users find Z service stations.
+### Find a service station near you!
+
+## Table of Contents
+- [Features](#features)
+- [MERN Tech Stack](#mern-tech-stack)
+- [Structure](#structure)
+- [Get Started](#get-started)
+- [Authors](#authors)
+
 
 <p align="center">
-    <img src="./assets/app.png">
+    <img src="./assets/app.png" alt="map screenshot">
 </p>
 
 ## Features
@@ -109,6 +117,6 @@ The backend API will typically run at [http://localhost:4000](http://localhost:4
 
 ### Development
 
-- [@Eugene L.](https://github.com/Eule034430)
-- [@Adam T.](https://github.com/AdamT-HJ)
-- [@Peter Z.](https://github.com/zetapow)
+- [@Eugene L.](https://github.com/Eule034430) - Search Component
+- [@Adam T.](https://github.com/AdamT-HJ) - Results Component
+- [@Peter Z.](https://github.com/zetapow) - Map Component
