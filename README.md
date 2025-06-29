@@ -1,8 +1,28 @@
 # Z Energy
 
-A web app for customers.
+This web app provides a solution to help users find Z service stations.
+![Map View](./assets/app.png)
 
 ## Features
+
+- **Interactive Map**: See nearby fuel stations
+- **Search Functionality**: Search by location, services, or fuel types
+- **Filtering**: Filter stations based on viewport or preferences
+- **Responsive Design**: Usable on desktop and mobile devices
+
+## MERN Tech Stack
+
+### Frontend
+
+- [![React](https://img.shields.io/badge/React-%2320232a.svg?logo=react&logoColor=%2361DAFB)](#)
+- [![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=fff)](#)
+- [MapTiler SDK](https://www.maptiler.com/)
+
+### Backend
+
+- [![NodeJS](https://img.shields.io/badge/Node.js-6DA55F?logo=node.js&logoColor=white)](#)
+- [![Express.js](https://img.shields.io/badge/Express.js-%23404d59.svg?logo=express&logoColor=%2361DAFB)](#)
+- [![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?logo=mongodb&logoColor=white)](#)
 
 ## Structure
 

@@ -1,6 +1,6 @@
 /**
  *
- * This file contains configuration settings for the MapTiler-based station map.
+ * This file contains settings for the MapTiler station map.
  * Modify these values to customize map behavior, performance, and appearance.
  */
 
@@ -20,7 +20,7 @@ export const MAP_CONFIG = {
   MIN_ZOOM: 3, // Minimum zoom level
   TILE_SIZE: 512, // Map tile size in pixels - fewer requests but more data
 
-  // Viewport settings - controls how map responds to user interaction
+  // Viewport settings - controls how map responds to interaction
   VIEWPORT_DEBOUNCE_MS: 500, // Wait time in ms before processing viewport changes
   ENABLE_VIEWPORT_FILTERING: true, // Only load stations visible in current map view
   VIEWPORT_PADDING: 0.1, // Extra area around visible map to preload stations (0.1 = 10% padding)
@@ -40,16 +40,7 @@ export const MAP_CONFIG = {
  */
 export const MAP_STYLES = {
   STREETS: "streets-v2", // Standard street map view (v2 is performance optimized)
+  STREETS_DARK: "streets-v2-dark", // Dark mode street map view
   SATELLITE: "satellite", // Satellite imagery view
   OUTDOOR: "outdoor", // Topographical/outdoor activity focused view
 };
-
-/**
-
- * Preload these resources to improve initial map loading speed.
- * These are font files used by the map for labels and text.
- */
-// export const PRELOAD_RESOURCES = [
-//   "https://api.maptiler.com/fonts/Open%20Sans%20Regular/0-255.pbf",
-//   "https://api.maptiler.com/fonts/Open%20Sans%20Bold/0-255.pbf",
-// ];

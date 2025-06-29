@@ -5,7 +5,7 @@ import markerServiceIcon from "../../assets/marker-service.png";
 import styles from "./StationMap.module.css";
 
 // Constants that can be configured globally
-import { MAP_CONFIG } from "../../constants/mapConstants";
+import { MAP_CONFIG, MAP_STYLES } from "../../constants/mapConstants";
 
 /**  Custom hooks **/
 import { useViewport } from "./hooks/useViewport"; // manage map viewport and bounds
@@ -47,7 +47,7 @@ const StationMap = ({
   // Optimized map options with performance settings
   const mapOptions = useMemo(
     () => ({
-      style: `https://api.maptiler.com/maps/streets/style.json?key=${apiKey}`,
+      style: `https://api.maptiler.com/maps/${MAP_STYLES.STREETS}/style.json?key=${apiKey}`,
       center: MAP_CONFIG.DEFAULT_CENTER,
       zoom: MAP_CONFIG.DEFAULT_ZOOM,
       // Performance optimizations
