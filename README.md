@@ -9,10 +9,9 @@
 - [Get Started](#get-started)
 - [Authors](#authors)
 
+![App Screenshot](./assets/app.png){ style="display: block; margin: 0 auto" }
 
-<p align="center">
-    <img src="./assets/app.png" alt="map screenshot">
-</p>
+
 
 ## Features
 
