@@ -9,7 +9,7 @@
 - [Get Started](#get-started)
 - [Authors](#authors)
 
-![App Screenshot](./assets/app.png){ style="display: block; margin: 0 auto" }
+![App Screenshot](./assets/app.png)
 
 
 
