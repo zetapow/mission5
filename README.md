@@ -5,7 +5,6 @@ This web app provides a solution to help users find Z service stations.
 <p align="center">
     <img src="./assets/app.png">
 </p>
-![Map View](./assets/app.png)
 
 ## Features
 
