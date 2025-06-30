@@ -17,15 +17,15 @@ This web app provides a solution to help users find Z service stations.
 
 ### Frontend
 
-- [![React](https://img.shields.io/badge/React-%2320232a.svg?logo=react&logoColor=%2361DAFB)](#)
-- [![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=fff)](#)
+- [![React](https://img.shields.io/badge/React-%2320232a.svg?logo=react&logoColor=%2361DAFB)](https://react.dev/)
+- [![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=fff)](https://vite.dev/)
 - [MapTiler SDK](https://www.maptiler.com/)
 
 ### Backend
 
-- [![NodeJS](https://img.shields.io/badge/Node.js-6DA55F?logo=node.js&logoColor=white)](#)
-- [![Express.js](https://img.shields.io/badge/Express.js-%23404d59.svg?logo=express&logoColor=%2361DAFB)](#)
-- [![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?logo=mongodb&logoColor=white)](#)
+- [![NodeJS](https://img.shields.io/badge/Node.js-6DA55F?logo=node.js&logoColor=white)](https://nodejs.org/en)
+- [![Express.js](https://img.shields.io/badge/Express.js-%23404d59.svg?logo=express&logoColor=%2361DAFB)](https://expressjs.com/)
+- [![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 
 ## Structure
 
@@ -33,19 +33,19 @@ This web app provides a solution to help users find Z service stations.
 mission5
 ├── backend/            # Server-side Node.js app
 │   ├── data/           # Static data files (JSON datasets)
-│   ├── middleware/     
+│   ├── middleware/
 │   ├── models/         # Database models/schemas (MongoDB/Mongoose)
 │   ├── routes/         # API endpoints
-│   └── util/           
+│   └── util/
 └── frontend/           # Client-side React app
-    ├── public/          
+    ├── public/
     └── src/            # React source code
         ├── assets/     # Dynamic assets (images, icons, media)
-        ├── components/ 
+        ├── components/
         |   └── shared/ # Header, footer and results menu
         ├── constants/  # Map configuration values
         └── styles/     # CSS files (variables, fonts)
-├── .env.example        
+├── .env.example
 └── README.md
 
 
