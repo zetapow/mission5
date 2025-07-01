@@ -1,0 +1,191 @@
+.dropdownContainer {
+  margin-bottom: 8px; 
+  border: 1px solid var(--border-color, #e0e0e0); 
+  border-radius: var(--border-radius-small, 4px);
+  overflow: hidden; 
+  border-style: none;
+  background-color: #fdfdfd;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  
+}
+
+.dropdownHeaderHours {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  background-color: var(--white); 
+  cursor: pointer;
+  border-bottom: 1px solid transparent; 
+  transition: background-color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+  border-radius: 30px;
+}
+
+
+.dropdownHeaderHours:hover {
+  background-color: var(--white);
+}
+
+.dropdownHeaderHours.open {
+  border-bottom-color: var(--border-color, #e0e0e0); 
+}
+
+.dropdownTitleHours {
+  margin: 0;
+  font-size: 0.9rem; 
+  color: var(--text-color-dark, #333);
+}
+
+.dropdownToggleHours {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--Black-5, #2A2A2A);
+  transition: transform 0.2s ease-in-out;
+  background-image: url('../../../assets/icons/chevron_thick.svg');
+  background-size: contain;
+  border-style: none;
+  padding: 0.5px;
+  width: 13px;
+  height:16px;
+  margin: 2px;
+  background-repeat: no-repeat;
+  font-family: "Test Calibre";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  margin: 5px;
+  margin-top: 15px;
+}
+
+/* to make it rotate when open */
+.dropdownToggleHours.open {
+  transform: rotate(180deg); 
+  margin-bottom: 20px;
+}
+
+
+
+.dropdownHeaderServices {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  background-color: var(--white); 
+  cursor: pointer;
+  border-bottom: 1px solid transparent; 
+  transition: background-color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+  border-radius: 30px;
+}
+
+
+.dropdownHeaderServices:hover {
+  background-color: var(--white);
+}
+
+.dropdownHeaderServices.open {
+  border-bottom-color: var(--border-color, #e0e0e0); 
+}
+
+.dropdownTitleServices {
+  margin: 0;
+  font-size: 0.9rem; 
+  color: var(--white);
+  font-weight: bold;
+  border-radius: 15px;
+  background-color: var(--secondary);
+  padding: 7px;
+}
+
+.dropdownToggleServices {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--white);
+  transition: transform 0.2s ease-in-out;
+  background-image: url('../../../assets/icons/chevron_thick.svg');
+  background-size: contain;
+  border-style: none;
+  padding: 2px;
+  width: 13px;
+  height:16px;
+  margin: 2px;
+  background-repeat: no-repeat;
+  font-family: "Test Calibre";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  margin: 5px;
+  margin-top: 15px;
+}
+
+.dropdownToggleServices.open {
+  transform: rotate(180deg); 
+  margin-bottom: 20px;
+}
+
+
+.dropdownContent {
+  padding: 8px 10px;
+  background-color: var(--background-white, #fff);
+  max-height: 150px; 
+  overflow-y: auto; 
+  font-size: 0.8rem; 
+  color: var(--text-color-medium, #555);
+}
+
+.dropdownContent p,
+.dropdownContent ul {
+  margin: 0; 
+  padding: 0;
+}
+
+.dropdownContent ul {
+  list-style-type: none; 
+}
+
+.dropdownContent li {
+  margin-bottom: 4px; 
+}
+
+.dropdownContent strong {
+  color: var(--text-color-dark, #333);
+}
+
+
+.hourItem, .serviceItem {
+    
+    margin-bottom: 4px; 
+    display: flex;
+    justify-content: space-between;
+}
+
+.stationName {
+color:  var(--secondary);
+}
+
+.getDirections{
+  display: flex;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid rgba(128, 128, 128, 0.432);
+}
+
+.getDirectionsButton {
+  background: none;
+  background-color: var(--white);
+  border-style: none;
+  color: grey;
+  margin-right: 5px;
+  margin-bottom: 25px;
+}
+
+.getDirectionsImg {
+  height: 12px;
+  opacity: 0.5;
+}
+

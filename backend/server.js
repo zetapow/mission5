@@ -11,7 +11,7 @@ const maptilerRoutes = require("./routes/maptiler");
 
 const stations = require("./routes/stations");
 const stationSearch = require("./routes/stationRoutes");
-
+const getDirections = require("./routes/getDirections");
 
 const app = express();
 app.use(cors());
@@ -29,6 +29,7 @@ mongoose.connect(MONGODB_CONNECTION).then(() => {
 app.use("/api/maptiler", maptilerRoutes);
 app.use("/api/stations", stations);
 app.use("/api/stations-search", stationSearch);
+app.use("/api/get-directions", getDirections);
 
 // server start
 const PORT = process.env.PORT || 4000;

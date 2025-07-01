@@ -1,12 +1,79 @@
 
+.dropdownTitle {
+    color: var(--Neutral-300, #787878);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    margin: 15px 0px 4px 0px
+}
+
+
+
 .dropdownDisplay {
-    background-color: aquamarine;
+    display: flex;
+    flex-direction: column;
+    border-radius: 25px;
+    border: 1px solid var(--Neutral-200, #C0C0C0);
+    background: var(--Color, #FFF);
+    background-image: url('../../../assets/icons/chevron_light.svg');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+.dropdownArrow {
+    align-self: flex-end;
+
+    padding: 8px 12px 4px 0px;
+}
+
+.defaultText {
+    color: var(--Neutral-300, #787878);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    padding: 4px 0px 4px 8px;
 }
 
 .selectedTagsContainer {
-    background-color: beige;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 30px;
+    border-style: none;
+    background: transparent;
+    padding: 2px 12px 2px 12px;
+    
 }
 
+.selectedTag {
+   margin: 4px 2px 4px 2px;
+   padding: 2px 4px 2px 4px;
+   border-radius: 25px;
+   border: 1px solid var(--Neutral-200, #C0C0C0);
+   background-color: var(--Secondary-700, #1C194C);
+   color: var(--Color, #FFF);
+   font-size: 16px;
+   font-style: normal;
+   font-weight: 700;
+}
+
+.tagCloseButton {
+    margin: 1px 6px 1px 6px;
+    background-color: var(--Secondary-700);
+    border-style: none;
+}
+
+
 .dropdownMenu {
-    background-color: rgba(171, 95, 241, 0.473);
+    background-color: var(--white, white);
+    list-style-type: none;
+    color: var(--Neutral-300, #787878);
+    margin: 8px 0px 4px 0px;
+    border: 1px solid var(--Neutral-200, #C0C0C0);
+    border-radius: 20px;
+    padding: 8px 0px 8px 8px;
+
+}
+
+.dropdownItem {
+    margin-top: 2px;
 }

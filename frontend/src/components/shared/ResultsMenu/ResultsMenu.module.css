@@ -1,18 +1,33 @@
 .menuBox{
     display: flex;
     flex-direction: column;
-    border-style: solid;
-    width: 40vw;
+    border-style: none;
     border-radius: 15px;
     z-index: 2000;
     position:absolute;
     left: 3rem;
     top: calc(3rem + 13.1875rem + 1rem);
     background-color: white;
-    max-height: 50rem;
-    overflow-y: auto; /* Enables vertical scrollbar when content overflows */
-    overflow-x: hidden; /* Hides horizontal scrollbar if not needed */
-    padding-bottom: 10px;
+    height: 55vh;
+    width: 28.3125rem;
+    overflow-y: auto; 
+    overflow-x: hidden; /* Hides horizontal scrollbar */
+    padding: 20px;
+    &::-webkit-scrollbar {
+    width: 0px;   /*  hides scroll bar - set width to 0 for vertical scrollbar */
+    height: 0px;  /* Set height to 0 for horizontal scrollbar */
+    background: transparent; /* Make the scrollbar track transparent */
+    }
+}
+
+.showAllResultsButton {
+    background-image: url('../../../assets/icons/arrow_back.svg');
+    width: 20px;
+    height: 20px;
+    background-color: var(--white);
+    border-style: none;
+    background-repeat: no-repeat;
+    
 }
 
 .buttonsBox{
@@ -73,4 +88,20 @@
 
 .numberOfResults {
     margin: 5px
+}
+
+@media (max-width: 768px) {
+  .menuBox {
+    width: 85%;
+    left: 2rem;
+    right: 2rem;
+    border-radius: 0;
+    top: 0;
+    /* height: 16rem; */
+    height: 55vh;
+    /* position: static; */
+    position: absolute;
+    top: calc(3rem + 13.1875rem + 1rem);
+    border-radius: 5%;
+  }
 }
