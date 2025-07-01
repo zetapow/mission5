@@ -5,7 +5,7 @@ import App from "./App.jsx";
 
 // Temporarily disable StrictMode to fix map initialization issues
 createRoot(document.getElementById("root")).render(
-  // <StrictMode>
+  <StrictMode>
     <App />
-  // </StrictMode>
+  </StrictMode>
 );

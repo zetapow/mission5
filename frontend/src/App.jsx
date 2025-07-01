@@ -30,16 +30,14 @@ function App() {
   const [selectedFilters, setSelectedFilters] = useState({
     services: [],
     stationTypes: [],
-    fuelTypes: []
+    fuelTypes: [],
   });
 
-
-  // State for any 1 stations selected by User 
+  // State for any 1 stations selected by User
   // so only 1 station shown when user clicks station name
   const [selectedStationId, setSelectedStationId] = useState(null);
 
-  
-  // --- PETER!!!!!!!!! code below should get you the full object 
+  // --- PETER!!!!!!!!! code below should get you the full object
   // for the selectedStationId so you can pass it to StationMap
   // So when user clicks a station title selectedStationId and selectedStationObject can be used to 'zoom-in'
   // you can pass selectedStationObject to StationMap to do this
@@ -50,10 +48,9 @@ function App() {
   //     return searchResults.find(station => (station._id || station.uuid) === selectedStationId);
   //     }
   //     return null;
-  //   }, [selectedStationId, searchResults]); 
+  //   }, [selectedStationId, searchResults]);
   // Dependencies on selectedStationId and searchResults list
 
-  
   // handlers to update states
   const handleSearchResultsUpdate = (results) => {
     setSearchResults(results);
@@ -71,8 +68,8 @@ function App() {
     if(loadingState){
       // setSearchAttempted(true);
       setSelectedStationId(null);
-      setSelectedFilters({services:[], stationTypes:[], fuelTypes:[]});
-    }   
+      setSelectedFilters({ services: [], stationTypes: [], fuelTypes: [] });
+    }
   };
 
   const handleError = (errorMessage) => {
@@ -81,13 +78,13 @@ function App() {
     // if error, means search attempted
     // setSearchAttempted(true);
     setSelectedStationId(null);
-    setSelectedFilters({services:[], stationTypes:[], fuelTypes:[]});
+    setSelectedFilters({ services: [], stationTypes: [], fuelTypes: [] });
   };
 
   const handleSearchTextChange = (text) => {
     setSearchText(text);
     // if user clears searchtext, clear error and loading states
-    if (text===""){
+    if (text === "") {
       setError(null);
       setIsLoading(false);
       setHasUserSubmittedSearch(false); // Hide menu if search box is empty
@@ -108,14 +105,14 @@ function App() {
   // Handler for users to click station card and 'un-display' others
   const handleStationCardClick = (stationId) => {
     //trying to debug issue with single StationCard render onClick
-    console.log("App.jsx: Station card clicked, setting ID:", stationId)
+    console.log("App.jsx: Station card clicked, setting ID:", stationId);
     setSelectedStationId(stationId);
   };
 
   // Handler to show all searchResults again if user clicks away from single station
   const handleShowAllResults = () => {
     //trying to debug issue with single StationCard render onClick
-    console.log("App.jsx: Show ALL results button clicked")
+    console.log("App.jsx: Show ALL results button clicked");
     setSelectedStationId(null);
   };
   
@@ -136,29 +133,36 @@ function App() {
 
     // Filter by Services (requires ALL selected (AND and OR))
     if (selectedFilters.services && selectedFilters.services.length > 0) {
-      filtered = filtered.filter(station =>
-        selectedFilters.services.every(selectedService => 
-          station.services && station.services.some(stationService =>
-            stationService.name === selectedService
-          )
+      filtered = filtered.filter((station) =>
+        selectedFilters.services.every(
+          (selectedService) =>
+            station.services &&
+            station.services.some(
+              (stationService) => stationService.name === selectedService
+            )
         )
       );
     }
 
     // Filter by Station Types
-    if (selectedFilters.stationTypes && selectedFilters.stationTypes.length > 0) {
-      filtered = filtered.filter(station =>
+    if (
+      selectedFilters.stationTypes &&
+      selectedFilters.stationTypes.length > 0
+    ) {
+      filtered = filtered.filter((station) =>
         selectedFilters.stationTypes.includes(station.type)
       );
     }
 
     // Filter by Fuel Types (requires ALL selected (AND and OR))
     if (selectedFilters.fuelTypes && selectedFilters.fuelTypes.length > 0) {
-      filtered = filtered.filter(station =>
-        selectedFilters.fuelTypes.every(selectedFuel => 
-          station.fuels && station.fuels.some(stationFuel =>
-            stationFuel.name === selectedFuel
-          )
+      filtered = filtered.filter((station) =>
+        selectedFilters.fuelTypes.every(
+          (selectedFuel) =>
+            station.fuels &&
+            station.fuels.some(
+              (stationFuel) => stationFuel.name === selectedFuel
+            )
         )
       );
     }
@@ -172,32 +176,38 @@ function App() {
 
   // For debugging, single station onClick not working
   useEffect(() => {
-        console.log("App.jsx - selectedFilters UPDATED:", selectedFilters);
-        console.log("App.jsx - displayedResults count after filter update:", displayedResults.length);
-        console.log("App.jsx - selectedStationId UPDATED:", selectedStationId); // Debugging single station view
+    console.log("App.jsx - selectedFilters UPDATED:", selectedFilters);
+    console.log(
+      "App.jsx - displayedResults count after filter update:",
+      displayedResults.length
+    );
+    console.log("App.jsx - selectedStationId UPDATED:", selectedStationId); // Debugging single station view
   }, [selectedFilters, displayedResults, selectedStationId]);
-
 
   // For debugging filters not working:
   useEffect(() => {
     console.log("App.jsx - selectedFilters UPDATED:", selectedFilters);
-    console.log("App.jsx - displayedResults count after filter update:", displayedResults.length);
-  }, [selectedFilters, displayedResults]); 
-
+    // Also log how many results are showing AFTER the filter change
+    console.log(
+      "App.jsx - displayedResults count after filter update:",
+      displayedResults.length
+    );
+  }, [selectedFilters, displayedResults]); // Add displayedResults here to see its update too
 
   return (
     <div className="App">
       <Header className="header" />
-
-      <main className="main">
+      <main className="main" role="main" aria-label="Z Service Station finder">
         <div className="mapContainer">
           <StationMap
+            aria-label="Map showing Z service stations"
             searchResults={searchResults}
             isLoading={isLoading}
             error={error}
           />
 
           <GeoSearch
+            role="search"
             searchText={searchText}
             onSearchTextChange={handleSearchTextChange}
             onSearchResults={handleSearchResultsUpdate}
@@ -206,8 +216,6 @@ function App() {
             onSearchTriggered={setHasUserSubmittedSearch}
           />
 
-            
-          
           {/* Conditional Rendering for after search/loading/error */}
           {shouldShowResultsMenu && (
           <ResultsMenu 
@@ -224,7 +232,6 @@ function App() {
             onCloseMenu={handleCloseResultsMenu}
             />
           )}
-
         </div>
       </main>
       <Footer className="footer" />

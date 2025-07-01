@@ -1,18 +1,61 @@
 # Z Energy
 
-A web app for customers.
+### Find a service station near you!
+
+## Table of Contents
+- [Features](#features)
+- [MERN Tech Stack](#mern-tech-stack)
+- [Structure](#structure)
+- [Get Started](#get-started)
+- [Authors](#authors)
+
+![App Screenshot](./assets/app.png)
+
+
 
 ## Features
+
+- **Interactive Map**: See nearby fuel stations
+- **Search Functionality**: Search by location, services, or fuel types
+- **Filtering**: Filter stations based on viewport or preferences
+- **Responsive Design**: Usable on desktop and mobile devices
+
+## MERN Tech Stack
+
+### Frontend
+
+- [![React](https://img.shields.io/badge/React-%2320232a.svg?logo=react&logoColor=%2361DAFB)](https://react.dev/)
+- [![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=fff)](https://vite.dev/)
+- [MapTiler SDK](https://www.maptiler.com/)
+
+### Backend
+
+- [![NodeJS](https://img.shields.io/badge/Node.js-6DA55F?logo=node.js&logoColor=white)](https://nodejs.org/en)
+- [![Express.js](https://img.shields.io/badge/Express.js-%23404d59.svg?logo=express&logoColor=%2361DAFB)](https://expressjs.com/)
+- [![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 
 ## Structure
 
 ```
 mission5
-├── backend/    # Node.js/ Express/ MongoDB API server
-├── frontend/   # React app (UI, components, assets)
+├── backend/            # Server-side Node.js app
+│   ├── data/           # Static data files (JSON datasets)
+│   ├── middleware/
+│   ├── models/         # Database models/schemas (MongoDB/Mongoose)
+│   ├── routes/         # API endpoints
+│   └── util/
+└── frontend/           # Client-side React app
+    ├── public/
+    └── src/            # React source code
+        ├── assets/     # Dynamic assets (images, icons, media)
+        ├── components/
+        |   └── shared/ # Header, footer and results menu
+        ├── constants/  # Map configuration values
+        └── styles/     # CSS files (variables, fonts)
 ├── .env.example
-├── .gitignore
 └── README.md
+
+
 
 ```
 
@@ -73,6 +116,6 @@ The backend API will typically run at [http://localhost:4000](http://localhost:4
 
 ### Development
 
-- [@Eugene L.](https://github.com/Eule034430)
-- [@Adam T.](https://github.com/AdamT-HJ)
-- [@Peter Z.](https://github.com/zetapow)
+- [@Eugene L.](https://github.com/Eule034430) - Search Component
+- [@Adam T.](https://github.com/AdamT-HJ) - Results Component
+- [@Peter Z.](https://github.com/zetapow) - Map Component
