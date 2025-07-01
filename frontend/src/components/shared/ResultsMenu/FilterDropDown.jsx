@@ -35,12 +35,22 @@ export default function FilterDropdown({
 
   return (
     <div className={styles.filterDropdownContainer}>
-      {title && <p className={styles.dropdownTitle}>{title}</p>} {/* Optional Title */}
+      {title && <div className={styles.dropdownTitle}>{title}</div>} {/* Optional Title */}
       <div
         className={styles.customDropdown}
-        ref={dropdownRef} // Attach ref here
+        ref={dropdownRef} 
       >
+        
+
         <div className={styles.dropdownDisplay} onClick={toggleDropdown}>
+          {/* img moved to a background image in CSS */}
+          {/* <img
+            src={DownArrowIcon}
+            alt="Toggle Dropdown"
+            className={`${styles.dropdownArrow} ${isDropdownOpen ? styles.arrowUp : ''}`}
+          /> */}
+
+          
           {selectedItems && selectedItems.length > 0 ? (
             <div className={styles.selectedTagsContainer}>
               {selectedItems.map((item) => (
@@ -48,7 +58,7 @@ export default function FilterDropdown({
                   {item}
                   <button
                     onClick={(e) => {
-                      e.stopPropagation(); // Prevent toggling dropdown when clicking the close button
+                      e.stopPropagation(); // Prevents toggling dropdown when clicking the close button
                       onItemRemove(item);
                     }}
                     className={styles.tagCloseButton}
@@ -66,11 +76,7 @@ export default function FilterDropdown({
           ) : (
             <span className={styles.defaultText}>{placeholderText}</span>
           )}
-          <img
-            src={DownArrowIcon}
-            alt="Toggle Dropdown"
-            className={`${styles.dropdownArrow} ${isDropdownOpen ? styles.arrowUp : ''}`}
-          />
+          
         </div>
 
         {isDropdownOpen && (

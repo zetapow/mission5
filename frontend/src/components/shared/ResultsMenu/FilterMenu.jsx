@@ -1,7 +1,9 @@
-// FilterMenu.jsx
-import React, { useState, useEffect } from 'react';
+import React  from 'react';
+import { useState, useEffect } from 'react';
 import styles from './FilterMenu.module.css';
 import FilterDropdown from './FilterDropDown.jsx';
+import ApplyTick from '../../../assets/icons/check.svg';
+import App from '../../../App.jsx';
 
 export default function FilterMenu({
   onClose,
@@ -31,7 +33,7 @@ export default function FilterMenu({
 
   // Helper function to extract unique service names
     const extractUniqueServiceNames = (stations) => {
-        const uniqueServices = new Set(); // Use a Set to automatically handle uniqueness
+        const uniqueServices = new Set(); 
 
         if (stations && Array.isArray(stations)) {
             stations.forEach(station => {
@@ -55,7 +57,7 @@ export default function FilterMenu({
         const uniqueTypes = new Set();
         if (stations && Array.isArray(stations)) {
             stations.forEach(station => {
-                if (station.type) { // station.type is a direct string
+                if (station.type) { 
                     uniqueTypes.add(station.type);
                 }
             });
@@ -81,18 +83,18 @@ export default function FilterMenu({
     };
 
 
-    // useEffect hook to run the extraction when 'results' change
+    // useEffect to run the 'extraction' when 'results' change
     useEffect(() => {
         const extractedServices = extractUniqueServiceNames(results);
         setServiceOptions(extractedServices);
 
         const extractedStationTypes = extractUniqueStationTypes(results);
-        setStationTypeOptions(extractedStationTypes); // Update stationTypeOptions
+        setStationTypeOptions(extractedStationTypes); 
 
         const extractedFuelNames = extractUniqueFuelNames(results);
-        setFuelOptions(extractedFuelNames); // Update fuelOptions
+        setFuelOptions(extractedFuelNames); 
 
-    }, [results]); // Dependency array: rerun when 'results' prop changes
+    }, [results]); // rerun when 'results' prop changes
 
 
     // Reset selected states when current selected props change
@@ -173,16 +175,39 @@ export default function FilterMenu({
         onClose(); // Close the filter menu
     };
 
+    //handlers for popular filter buttons (opening hours unable to implement at this stage ran out of time)
+    const handleCarwashClick = () => {
+        const carwashService = "Z2O carwash"; // The exact string to add
+        setSelectedServices(prevSelected => {
+            // Only add if it's not already in the array
+            if (!prevSelected.includes(carwashService)) {
+                return [...prevSelected, carwashService];
+            }
+            return prevSelected; // If already includes, return current state (do nothing)
+        });
+    };
+
+    const handleUnleadedClick = () => {
+        const unleadedFuel = "Z91 Unleaded"; // The exact string to add
+        setSelectedFuelTypes(prevSelected => {
+            // Only add if it's not already in the array
+            if (!prevSelected.includes(unleadedFuel)) {
+                return [...prevSelected, unleadedFuel];
+            }
+            return prevSelected; // If already includes, return current state (do nothing)
+        });
+    };
+
   return (
     <main className={styles.filterMenuBox}>
-      <div className={styles.Title}>Filter</div>
+      <div className={styles.title}>Filter</div>
 
       <div className={styles.popularFiltersBox}>
-        <p>Popular filters</p>
+        <p className={styles.popularFiltersTitle}>Popular filters</p>
         <div className={styles.popularFiltersButtons}>
-          <button>Car wash</button>
+          <button className={styles.carwash} onClick={handleCarwashClick}>Car wash</button>
           <button>Open now</button>
-          <button>91 Unleaded</button>
+          <button className={styles.unleaded} onClick={handleUnleadedClick}>91 Unleaded</button>
         </div>
       </div>
 
@@ -216,9 +241,12 @@ export default function FilterMenu({
         onItemRemove={handleFuelTypeItemRemove}
       />
 
-      <div className={styles.filterActions}>
+      <div className={styles.filterApplyCancelDiv}>
         <button className={styles.cancelButton} onClick={handleCancel}>Cancel</button>
-        <button className={styles.applyButton} onClick={handleApply}>Apply</button>
+        <button className={styles.applyButton} onClick={handleApply}>
+          <img src={ApplyTick} alt="Apply Tick" />
+          Apply
+        </button>
       </div>
 
     </main>

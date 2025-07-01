@@ -4,3 +4,54 @@
     margin: 5px;
 
 }
+
+.title {
+   color: var(--secondary); 
+   font-size: 24px;
+   font-weight: 700;
+}
+
+.popularFiltersTitle {
+    color: var(--Neutral-300, #787878);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    margin: 4px 0px 4px 0px
+}
+
+.popularFiltersButtons button {
+    background-color: var(--white);
+    border: 1px solid var(--Neutral-200, #C0C0C0);
+    border-radius: 16px;
+    padding: 4px 10px 4px 10px;
+    margin: 4px;
+}
+
+.filterApplyCancelDiv {
+    display: flex;
+    justify-content: flex-start;
+    gap: 2svw;
+    margin: 25px 0px 0px 0px;
+}
+
+.filterApplyCancelDiv button {
+  border: 1px solid var(--Neutral-200, #C0C0C0);
+  border-radius: 32px;  
+  padding: 4px 10px 4px 10px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.cancelButton {
+    background-color: var(--white, white);
+    width: 112px;
+}
+
+.applyButton {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    background-color: var(--neutral-100, #e1e1e1);
+    width: 120px;
+}

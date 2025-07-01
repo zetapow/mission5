@@ -14,6 +14,7 @@ function GeoSearch({
   onSearchResults,
   onLoading,
   onError,
+  onSearchTriggered,
 }) {
   //searchText state now handled by App.jsx so can be passed to other components in App.jsx
   const [showPrice, setShowPrice] = useState(false);
@@ -68,6 +69,8 @@ function GeoSearch({
   }
 
   const handleSearch = () => {
+    // for use in App.jsx and conditional rendering of 'ResultsMenu'
+    if(onSearchTriggered) onSearchTriggered(true);
     fetchSearchResults(searchText)
   }
 
@@ -89,6 +92,8 @@ function GeoSearch({
             onSelect={(item) => {
               console.log("User selected:", item, searchText);
               onSearchTextChange(item.label);
+              // for use in App.jsx and conditional rendering of 'ResultsMenu'
+              if (onSearchTriggered) onSearchTriggered(true);
               fetchSearchResults(item.label);
             }}
           />

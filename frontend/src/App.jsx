@@ -17,7 +17,13 @@ function App() {
   const [searchText, setSearchText] = useState("");
 
   //check if a search has been attempted to help with conditional render of ResultsMenu on search
-  const [searchAttempted, setSearchAttempted] = useState(false);
+  // Code commented out, redundant after changes to GeoSearch adding 'SearchSuggestions' feature
+  // const [searchAttempted, setSearchAttempted] = useState(false);
+
+  // replacement for 'searchAttempted above'
+  // tracks onEnter / onSelect from GeoSearch for conditional render of ResultsMenu
+  // 'lifted' from GeoSearch 'onSearchTriggered' prop.
+  const [hasUserSubmittedSearch, setHasUserSubmittedSearch] = useState(false);
 
   // State for filters applied in ResultsMenu (FilterMenu)
   // State 'lifted' as filters need to be applied to search results.
@@ -50,17 +56,17 @@ function App() {
     setSearchResults(results);
     setIsLoading(false);
     setError(null);
-    setSearchAttempted(true);
-    setSelectedStationId(null);
-    setSelectedFilters({ services: [], stationTypes: [], fuelTypes: [] });
+    // setSearchAttempted(true);
+    setSelectedStationId(null)
+    setSelectedFilters({services:[], stationTypes:[], fuelTypes:[]});
   };
 
   //NOTE: 'loadingState' not the same as 'LoadingState' (cap. I)
   const handleLoading = (loadingState) => {
     setIsLoading(loadingState);
     // if loading, means search attempted
-    if (loadingState) {
-      setSearchAttempted(true);
+    if(loadingState){
+      // setSearchAttempted(true);
       setSelectedStationId(null);
       setSelectedFilters({ services: [], stationTypes: [], fuelTypes: [] });
     }
@@ -70,7 +76,7 @@ function App() {
     setError(errorMessage);
     setIsLoading(false);
     // if error, means search attempted
-    setSearchAttempted(true);
+    // setSearchAttempted(true);
     setSelectedStationId(null);
     setSelectedFilters({ services: [], stationTypes: [], fuelTypes: [] });
   };
@@ -81,6 +87,7 @@ function App() {
     if (text === "") {
       setError(null);
       setIsLoading(false);
+      setHasUserSubmittedSearch(false); // Hide menu if search box is empty
     }
   };
 
@@ -88,8 +95,8 @@ function App() {
   const handleApplyFilters = (filters) => {
     setSelectedFilters(filters);
     //debugging filter OR vs AND issue
-    console.log("Current selectedFilters state:", selectedFilters);
-    // Could also re-fetch & search again here?
+    console.log("Current selectedFilters state:", selectedFilters)
+    // Could also re-fetch & search again here, not sure if we need this?
     // Currently just filtering existing SearchResults.
     console.log("Filters applied in App.jsx:", filters);
     setSelectedStationId(null);
@@ -108,12 +115,21 @@ function App() {
     console.log("App.jsx: Show ALL results button clicked");
     setSelectedStationId(null);
   };
+  
+  // Handler to close ResultsMenu (trigger on click close icon)
+  const handleCloseResultsMenu = () => {
+    setHasUserSubmittedSearch(false); //so ResultsMenu not render
+    setSelectedFilters({ services: [], stationTypes: [], fuelTypes: [] });
+    // clear filters
+    setError(null);
+    setIsLoading(false);
+  };
 
-  // Memoized filtering logic
-  // hook will re-run when rawSearchResults or selectedFilters change
-  //had to do some debugging here was using for filters .some (OR logic) also needed .every (AND logic)
+  // filtering logic
+  // will re-run when searchResults or selectedFilters change
+  //had to do some debugging here was using for filters .some (OR logic) also needed .every (AND logic) 
   const displayedResults = useMemo(() => {
-    let filtered = searchResults; //raw data from API search
+    let filtered = searchResults; //data from API search
 
     // Filter by Services (requires ALL selected (AND and OR))
     if (selectedFilters.services && selectedFilters.services.length > 0) {
@@ -154,13 +170,9 @@ function App() {
     return filtered;
   }, [searchResults, selectedFilters]); // Dependencies for useMemo
 
-  //To decide when to render ResultsMenu
-  //IF currently loading, error, results to display, search attempted
-  const shouldShowResultsMenu =
-    isLoading ||
-    error ||
-    displayedResults.length > 0 ||
-    (searchAttempted && searchText !== "");
+  //conditional rendering of ResultsMenu
+  // IF search attempted, changed from previous state following search suggestion addition to GeoSearch
+  const shouldShowResultsMenu = hasUserSubmittedSearch;
 
   // For debugging, single station onClick not working
   useEffect(() => {
@@ -201,20 +213,23 @@ function App() {
             onSearchResults={handleSearchResultsUpdate}
             onLoading={handleLoading}
             onError={handleError}
+            onSearchTriggered={setHasUserSubmittedSearch}
           />
 
           {/* Conditional Rendering for after search/loading/error */}
           {shouldShowResultsMenu && (
-            <ResultsMenu
-              results={displayedResults}
-              isLoading={isLoading}
-              error={error}
-              searchText={searchText}
-              selectedFilters={selectedFilters}
-              setSelectedFilters={setSelectedFilters}
-              onStationCardClick={handleStationCardClick}
-              selectedStationId={selectedStationId}
-              handleShowAllResults={handleShowAllResults}
+          <ResultsMenu 
+            results={displayedResults}
+            isLoading={isLoading}
+            error={error}
+            searchText={searchText}
+            selectedFilters={selectedFilters}
+            setSelectedFilters={setSelectedFilters}
+            onStationCardClick={handleStationCardClick}
+            selectedStationId={selectedStationId}
+            handleShowAllResults={handleShowAllResults}
+            onApplyFilters={handleApplyFilters}
+            onCloseMenu={handleCloseResultsMenu}
             />
           )}
         </div>
