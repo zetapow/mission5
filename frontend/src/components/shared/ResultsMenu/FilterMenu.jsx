@@ -1,4 +1,5 @@
 import React  from 'react';
+import { useState, useEffect } from 'react';
 import styles from './FilterMenu.module.css';
 import FilterDropdown from './FilterDropDown.jsx';
 import ApplyTick from '../../../assets/icons/check.svg';
